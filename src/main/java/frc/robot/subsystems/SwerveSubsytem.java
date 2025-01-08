@@ -24,13 +24,13 @@ import edu.wpi.first.math.util.Units;
 
 import static edu.wpi.first.units.Units.Meter;
 
-public class SwerveSubstem extends SubsystemBase {
+public class SwerveSubsytem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
 
   File directory = new File(Filesystem.getDeployDirectory(),"swerve");
   SwerveDrive  swerveDrive;
  
-public SwerveSubstem() {
+public SwerveSubsytem() {
   try
     {
       swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.maxSpeed,

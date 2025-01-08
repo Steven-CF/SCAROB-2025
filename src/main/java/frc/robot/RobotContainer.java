@@ -8,8 +8,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.SwerveSubstem;
+import frc.robot.subsystems.SwerveSubsytem;
 import swervelib.SwerveInputStream;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -23,7 +24,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final SwerveSubstem drivebase = new SwerveSubstem();
+  private final SwerveSubsytem drivebase = new SwerveSubsytem();
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -32,7 +33,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-    drivebase.setDefaultCommand(driveFieldOrientedAnularVelocity);
+    drivebase.setDefaultCommand(!RobotBase.isSimulation() ? driveFieldOrientedAnularVelocity : driveFieldOrientedDirectAngleSim);
   }
 
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
@@ -50,6 +51,26 @@ public class RobotContainer {
   Command driveFieldOrientedDriectAngle = drivebase.driveFieldOriented(driveDriectAngle);
 
   Command driveFieldOrientedAnularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
+
+  SwerveInputStream driveAngularVelocitySim = SwerveInputStream.of(drivebase.getSwerveDrive(),
+                                                                    () -> -m_driverController.getLeftY(),
+                                                                    () -> -m_driverController.getLeftX())
+                                                                    .withControllerRotationAxis(() -> m_driverController.getRawAxis(2))
+                                                                    .deadband(OperatorConstants.DEADBAND)
+                                                                    .scaleTranslation(0.8)
+                                                                    .allianceRelativeControl(true);
+
+  SwerveInputStream driveDirectAngleSim = driveAngularVelocitySim.copy().withControllerHeadingAxis(() -> Math.sin(
+                                                                                                         m_driverController.getRawAxis(
+                                                                                                         2) * Math.PI) * (Math.PI * 2),
+                                                                                                         () -> Math.cos(
+                                                                                                         m_driverController.getRawAxis(
+                                                                                                         2) * Math.PI) *
+                                                                                                         (Math.PI * 2))
+    .headingWhile(true);
+
+Command driveFieldOrientedDirectAngleSim = drivebase.driveFieldOriented(driveDirectAngleSim);
+
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
    * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
