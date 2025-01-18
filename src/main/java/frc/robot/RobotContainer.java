@@ -74,7 +74,7 @@ public class RobotContainer {
                                                                                                          m_driverController.getRawAxis(
                                                                                                          2) * Math.PI) *
                                                                                                          (Math.PI * 2))
-    .headingWhile(true);
+                                                                                                        .headingWhile(true);
 
 Command driveFieldOrientedDirectAngleSim = drivebase.driveFieldOriented(driveDirectAngleSim);
 
