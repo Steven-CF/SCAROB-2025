@@ -21,4 +21,8 @@ public final class Constants {
   }
   public static final double maxSpeed = Units.feetToMeters(4.5);
 
+  public class Intake {
+    public static final int INTAKE_ID = 30;
+  }
+
 }
