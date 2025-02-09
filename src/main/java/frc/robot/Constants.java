@@ -24,5 +24,4 @@ public final class Constants {
   public class Intake {
     public static final int INTAKE_ID = 30;
   }
-
 }
