@@ -1,4 +1,4 @@
-package frc.robot.Elevator;
+package frc.robot.subsystems.Elevator;
 
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
