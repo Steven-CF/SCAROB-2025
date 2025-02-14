@@ -8,7 +8,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -19,12 +21,44 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandXboxController xboxDriverController = new CommandXboxController(0);
+  private final CommandXboxController xboxOperatorController = new CommandXboxController(1);
+
+  /* Driver Buttons */
+  private final Trigger dStart = xboxDriverController.start();
+  private final Trigger dBack = xboxDriverController.back();
+  private final Trigger dY = xboxDriverController.y();
+  private final Trigger dB = xboxDriverController.b();
+  private final Trigger dA = xboxDriverController.a();
+  private final Trigger dX = xboxDriverController.x();
+  private final Trigger dLeftBumper = xboxDriverController.leftBumper();
+  private final Trigger dRightBumper = xboxDriverController.rightBumper();
+  private final Trigger dLeftTrigger = xboxDriverController.leftTrigger();
+  private final Trigger dRightTrigger = xboxDriverController.rightTrigger();
+  private final Trigger dPOVDown = xboxDriverController.povDown(); 
+  private final Trigger dPOVUp = xboxDriverController.povUp(); 
+  private final Trigger dPOVLeft = xboxDriverController.povLeft();
+  private final Trigger dPOVRight = xboxDriverController.povRight();
+
+  /* Operator Buttons */
+  private final Trigger opStart = xboxOperatorController.start();
+  private final Trigger opBack = xboxOperatorController.back();
+  private final Trigger opY = xboxOperatorController.y();
+  private final Trigger opB = xboxOperatorController.b();
+  private final Trigger opA = xboxOperatorController.a();
+  private final Trigger opX = xboxOperatorController.x();
+  private final Trigger opLeftBumper = xboxOperatorController.leftBumper();
+  private final Trigger opRightBumper = xboxOperatorController.rightBumper();
+  private final Trigger opLeftTrigger = xboxOperatorController.leftTrigger();
+  private final Trigger opRightTrigger = xboxOperatorController.rightTrigger();
+  private final Trigger opPOVDown = xboxOperatorController.povDown();
+  private final Trigger opPOVUp = xboxOperatorController.povUp();
+  private final Trigger opPOVLeft = xboxOperatorController.povLeft();
+  private final Trigger opPOVRight = xboxOperatorController.povRight();
+  
+  //Subsystems are declared here 
+  private ElevatorSubsystem elevatorSubsystem;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -42,22 +76,33 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+     // Climb up
+    dLeftBumper.whileTrue(new InstantCommand(() -> climbSubsystem.moveClimb(0)))
+      .whileFalse(new InstantCommand(() -> climbSubsystem.stopClimb()));
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    // Climb down
+    dRightBumper.whileTrue(new InstantCommand(() -> climbSubsystem.moveClimb(0)))
+    .whileFalse(new InstantCommand(() -> climbSubsystem.stopClimb()));
+
+    // Controls level selection
+    opY.whileTrue(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L4))) //while pressed set to Level 4
+      .onFalse(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L2))); //if not pressed set defualt to Level 2  
+
+    opB.whileTrue(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L3))) //while pressed set to Level 3
+      .onFalse(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L2))); //if not pressed set defualt to Level 2 
+
+    opA.whileTrue(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L2))); //while pressed set to Level 3
+
+    opX.whileTrue(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L1))) //while pressed set to Level 1
+      .onFalse(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L2))); //if not pressed set defualt to Level 2 
   }
-
+// I will fix the red when the code is complete this is a pase holder for now BTW this code will not be red when we add the states and the other classes that are needed I just need to fix the code in states and then we can add it 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  //public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
   }
-}
+    // An example command will be run in autonomous
