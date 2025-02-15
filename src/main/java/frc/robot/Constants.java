@@ -21,8 +21,15 @@ public final class Constants {
   }
   public static final double maxSpeed = Units.feetToMeters(4.5);
 
-  public class Intake {
-    public static final int INTAKE_ID = 30;
+  public class CoralManipulator {
+    public static final int CORAL_MANIPULATOR_1_ID = 41;
+    public static final int CORAL_MANIPULATOR_2_ID = 42;
+
+    public static final int CORAL_SENSOR = 43;
+  }
+
+  public class Slapdown {
+    public static final int SlAPDOWN_ANGLE_ID = 51;
   }
 
 }
