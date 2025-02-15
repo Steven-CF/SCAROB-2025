@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.state.sequencer.*;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
@@ -77,12 +78,12 @@ public class RobotContainer {
    */
   private void configureBindings() {
      // Climb up
-    dLeftBumper.whileTrue(new InstantCommand(() -> climbSubsystem.moveClimb(0)))
-      .whileFalse(new InstantCommand(() -> climbSubsystem.stopClimb()));
+    //dLeftBumper.whileTrue(new InstantCommand(() -> climbSubsystem.moveClimb(0)))
+      //.whileFalse(new InstantCommand(() -> climbSubsystem.stopClimb()));
 
     // Climb down
-    dRightBumper.whileTrue(new InstantCommand(() -> climbSubsystem.moveClimb(0)))
-    .whileFalse(new InstantCommand(() -> climbSubsystem.stopClimb()));
+    //dRightBumper.whileTrue(new InstantCommand(() -> climbSubsystem.moveClimb(0)))
+    //.whileFalse(new InstantCommand(() -> climbSubsystem.stopClimb()));
 
     // Controls level selection
     opY.whileTrue(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L4))) //while pressed set to Level 4
