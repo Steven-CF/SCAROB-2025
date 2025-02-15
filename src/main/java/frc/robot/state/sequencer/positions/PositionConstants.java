@@ -35,33 +35,33 @@ public final class PositionConstants {
     public static final class CORAL_SCORE {
         // TODO needs real positions, we haven't worked on this yets
         public static final class CORAL_L1 {
-            public final static double raiseElevatorPosition = 0;
-            public final static double raiseElevatorThresholdPosition = 0;
-            public final static double lowerElevatorThresholdPosition = 0;
+            public final static double raiseElevatorPosition = 4;
+            public final static double raiseElevatorThresholdPosition = 4.1;
+            public final static double lowerElevatorThresholdPosition = 3.9;
             public final static double armForwardPosition = 0;
             public final static double armScorePosition = 0;
         }
 
         public static final class CORAL_L2 {
-            public final static double raiseElevatorPosition = 21;
-            public final static double raiseElevatorThresholdPosition = 16;
-            public final static double lowerElevatorThresholdPosition = 20;
+            public final static double raiseElevatorPosition = 9;
+            public final static double raiseElevatorThresholdPosition = 9.1;
+            public final static double lowerElevatorThresholdPosition = 8.9;
             public final static double armForwardPosition = 8.5;
             public final static double armScorePosition = 15;
         }
 
         public static final class CORAL_L3 {
-            public final static double raiseElevatorPosition = 46;
-            public final static double raiseElevatorThresholdPosition = 41;
-            public final static double lowerElevatorThresholdPosition = 45;
+            public final static double raiseElevatorPosition = 17;
+            public final static double raiseElevatorThresholdPosition = 17.1;
+            public final static double lowerElevatorThresholdPosition = 16.9;
             public final static double armForwardPosition = 8.5;
             public final static double armScorePosition = 15;
         }
 
         public static final class CORAL_L4 {
-            public final static double raiseElevatorPosition = 95;
-            public final static double raiseElevatorThresholdPosition = 90;
-            public final static double lowerElevatorThresholdPosition = 94;
+            public final static double raiseElevatorPosition = 27;
+            public final static double raiseElevatorThresholdPosition = 27.1;
+            public final static double lowerElevatorThresholdPosition = 26.9;
             public final static double armForwardPosition = 9;
             public final static double armScorePosition = 15;
         }

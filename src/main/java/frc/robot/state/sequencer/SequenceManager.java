@@ -22,7 +22,7 @@ public class SequenceManager {
         // notify the state machine and it will handle it if applicable
         // if not applicable to the sequence/state it will be ignored
         if(stateMachine != null && stateMachine.hasLoadedTransitions()) {
-            //stateMachine.setInput(SequenceInput.LEVEL_CHANGED);
+            stateMachine.setInput(SequenceInput.LEVEL_CHANGED);
         }
     }
 
