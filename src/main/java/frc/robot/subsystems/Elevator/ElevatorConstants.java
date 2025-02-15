@@ -3,9 +3,9 @@ package frc.robot.subsystems.Elevator;
 import com.ctre.phoenix6.signals.InvertedValue;
 
 public final class ElevatorConstants {
-    public final static int elevatorCanId1 = 41;
-    public final static int elevatorCanId2 = 42;
-    public final static double gearRatioModifier = (12/20);
+    public final static int elevatorCanId1 = 31;
+    public final static int elevatorCanId2 = 32;
+    public final static double gearRatioModifier = (1/7.75);
      //Outputs
     public final static double idleOutput = 0;
 
@@ -16,6 +16,6 @@ public final class ElevatorConstants {
     // Positions
     public final static double elevatorHomePosition = 0;
     public final static double minElevatorPosition = 0;
-    public final static double maxElevatorPosition = 97 * gearRatioModifier;
+    public final static double maxElevatorPosition = 36 * gearRatioModifier;
 
 }
