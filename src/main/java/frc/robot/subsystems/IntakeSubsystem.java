@@ -14,7 +14,7 @@ import frc.robot.Constants;
 public class IntakeSubsystem extends SubsystemBase {
     
     private SparkMax intakeMotor = new SparkMax(Constants.Intake.INTAKE_ID, MotorType.kBrushless);
-    private TalonFX pivotMotor = new TalonFX(31);
+    private TalonFX pivotMotor = new TalonFX(60);
 
     public IntakeSubsystem() {
         
