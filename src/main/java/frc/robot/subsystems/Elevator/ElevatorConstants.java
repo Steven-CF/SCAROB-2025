@@ -10,8 +10,8 @@ public final class ElevatorConstants {
     public final static double idleOutput = 0;
 
     //Motor Direction
-    public final static InvertedValue elevatorMotor1Direction = InvertedValue.Clockwise_Positive;
-    public final static InvertedValue elevatorMotor2Direction = InvertedValue.Clockwise_Positive;
+    public final static InvertedValue elevatorMotor1Direction = InvertedValue.CounterClockwise_Positive;
+    public final static InvertedValue elevatorMotor2Direction = InvertedValue.CounterClockwise_Positive;
 
     // Positions
     public final static double elevatorHomePosition = 0;

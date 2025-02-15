@@ -4,7 +4,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 
 public final class ArmConstants {
     //Arm Can ID
- //   public final static int armCanId = 72;
+    public final static int armCanId = 72;
 
     // Motor Direction
     public final static InvertedValue armMotorDirection = InvertedValue.Clockwise_Positive;
