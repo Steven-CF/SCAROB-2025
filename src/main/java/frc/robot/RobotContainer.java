@@ -12,8 +12,13 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.subsystems.arm.*;
+import frc.robot.subsystems.hand.*;
+import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.commands.RunSequenceCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -60,7 +65,9 @@ public class RobotContainer {
   
   //Subsystems are declared here 
   private ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem(true);
-
+  private ArmSubsystem armsubsystem = new ArmSubsystem(true);
+  private HandClamperSubsystem clamperSubsystem = new HandClamperSubsystem(true);
+  private HandIntakeSubsystem handintakeSubsystem = new HandIntakeSubsystem(true);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -77,7 +84,11 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-     // Climb up
+
+    dRightTrigger.whileTrue(new SequentialCommandGroup(
+      new InstantCommand(() -> SequenceManager.setActionSelection(Action.SCORE)),
+      new RunSequenceCommand(elevatorSubsystem, armsubsystem, clamperSubsystem, handintakeSubsystem)));
+    // Climb up
     //dLeftBumper.whileTrue(new InstantCommand(() -> climbSubsystem.moveClimb(0)))
       //.whileFalse(new InstantCommand(() -> climbSubsystem.stopClimb()));
 
@@ -93,9 +104,12 @@ public class RobotContainer {
       .onFalse(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L2))); //if not pressed set defualt to Level 2 
 
     dA.whileTrue(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L2))); //while pressed set to Level 3
+    
+    dX.whileTrue(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L1))) //while pressed set to Level 1
+      .onFalse(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L2))); //if not pressed set defualt to Level 2 
 
-    dX.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(50)));
-  }
+    //dX.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(50))); //use for testing 
+  } 
 // I will fix the red when the code is complete this is a pase holder for now BTW this code will not be red when we add the states and the other classes that are needed I just need to fix the code in states and then we can add it 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -105,4 +119,3 @@ public class RobotContainer {
   //public Command getAutonomousCommand() {
     // An example command will be run in autonomous
   }
-    // An example command will be run in autonomous

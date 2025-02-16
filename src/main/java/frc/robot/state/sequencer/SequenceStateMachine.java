@@ -96,6 +96,10 @@ public class SequenceStateMachine extends StateMachine {
         elevatorSubsystem.moveElevator(positions.raiseElevatorPosition, subsystemCallback, positions.raiseElevatorThreshold);
         return true;
     }
+    //Add intakecode 
+    public boolean outTaking(){ 
+        return true;
+    }
 
     public boolean raiseElevatorNoThreshold() {
         elevatorSubsystem.moveElevator(positions.raiseElevatorPosition, subsystemCallback);
