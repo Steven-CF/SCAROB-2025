@@ -13,7 +13,7 @@ public class CoralManipulatorSubsystem extends SubsystemBase {
 
     private final SparkFlex coralManipulator1 = new SparkFlex(Constants.CoralManipulator.CORAL_MANIPULATOR_1_ID, MotorType.kBrushless);
     private final SparkFlex coralManipulator2 = new SparkFlex(Constants.CoralManipulator.CORAL_MANIPULATOR_2_ID, MotorType.kBrushless);
-    private final LaserCan coralSensor = new LaserCan(Constants.CoralManipulator.CORAL_SENSOR);
+    private final LaserCan coralSensor = new LaserCan(Constants.CoralManipulator.CORAL_SENSOR_ID);
 
     public CoralManipulatorSubsystem() {
     }
