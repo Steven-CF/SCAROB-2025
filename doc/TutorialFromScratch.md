@@ -37,7 +37,7 @@ Note: if vendor code does not support simulation, isolate to the robot only by r
 ## Point Tools to Simulator
 
 By default tools are setup to point the robotRIO, so we will point them to the simulator which should currently be running per the previous section.
-  
+
 Run the `Shuffleboard 2025` in the `2025 WPLib Tools` folder found on your desktop.
 - Select `Preferences` from the `File` menu
 - Set `Plugins=>NetworkTables=>Server` to `localhost`

@@ -14,6 +14,8 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -104,6 +106,7 @@ public class RobotContainer {
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
+    //Register the Named Commands
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -147,6 +150,7 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
