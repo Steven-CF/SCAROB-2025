@@ -7,6 +7,8 @@ public class IntakeCoral extends Command {
 
     private final CoralManipulatorSubsystem coralManipulator;
 
+    private boolean hasCoral = false;
+
     public IntakeCoral(CoralManipulatorSubsystem coralManipulator) {
         this.coralManipulator = coralManipulator;
         addRequirements(coralManipulator);
@@ -14,23 +16,28 @@ public class IntakeCoral extends Command {
     
     @Override
     public void initialize() {
-        coralManipulator.powerIntakeShooter();
+        coralManipulator.intake();
     }
 
     @Override
     public void execute() {
-        if (coralManipulator.hasNote() == true) {
-
+        if (coralManipulator.coralDetected() == true) {
+            coralManipulator.resetEncoders();
+            hasCoral = true;
         }
     }
 
     @Override
     public boolean isFinished() {
+        if (hasCoral == true && coralManipulator.reachedPosition() == true) {
+            return true;
+        }
         return false;
     }
 
     @Override
     public void end(boolean interupted) {
-        coralManipulator.stopIntakeShooter();
+        coralManipulator.stopMotors();
+        hasCoral = false;
     }
 }
