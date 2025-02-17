@@ -30,12 +30,15 @@ public class SequenceStateMachine extends StateMachine {
     private boolean elevatorResetDone = false;
     private boolean armResetDone = false;
 
-
-    public SequenceStateMachine(ElevatorSubsystem elevatorSubsystem, ArmSubsystem armSubsystem, HandClamperSubsystem handClamperSubsystem, HandIntakeSubsystem handIntakeSubsystem) { //add hand here
+    //  public SequenceStateMachine(ElevatorSubsystem elevatorSubsystem, ArmSubsystem armSubsystem, HandClamperSubsystem handClamperSubsystem, HandIntakeSubsystem handIntakeSubsystem) { //add hand here
+            // this.elevatorSubsystem = elevatorSubsystem;
+            // this.armSubsystem = armSubsystem;
+            // this.handClamperSubsystem = handClamperSubsystem;
+            // this.handIntakeSubsystem = handIntakeSubsystem;
+            // setCurrentState(SequenceState.HOME);
+    //}
+    public SequenceStateMachine(ElevatorSubsystem elevatorSubsystem) { //add hand here
         this.elevatorSubsystem = elevatorSubsystem;
-        this.armSubsystem = armSubsystem;
-        this.handClamperSubsystem = handClamperSubsystem;
-        this.handIntakeSubsystem = handIntakeSubsystem;
         setCurrentState(SequenceState.HOME);
     }
 
@@ -177,7 +180,8 @@ public class SequenceStateMachine extends StateMachine {
     // Drive the elevator to a new position when the operator overrides it midstream
     public boolean updateElevator() {
         // Find the new elevator position by using the new level with the current action and game piece
-        Sequence updatedLevelSequence = SequenceFactory.getSequence(updatedLevel, currentGamePiece, currentAction);
+        //Sequence updatedLevelSequence = SequenceFactory.getSequence(updatedLevel, currentGamePiece, currentAction);
+        Sequence updatedLevelSequence = SequenceFactory.getSequence(updatedLevel);
         Positions updatedLevelPositions = SequenceFactory.getPositions(updatedLevelSequence);
         // Drive to the updated position
         elevatorSubsystem.moveElevator(updatedLevelPositions.raiseElevatorPosition, subsystemCallback);

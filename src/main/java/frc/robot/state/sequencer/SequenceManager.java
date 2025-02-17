@@ -45,15 +45,21 @@ public class SequenceManager {
     public static void setActionSelection(Action action) {
         actionSelection = action;
     }
-
-    public static SequenceStateMachine getStateMachine(ElevatorSubsystem elevatorSubsystem, ArmSubsystem armSubsystem, HandClamperSubsystem clamperSubsystem, HandIntakeSubsystem intakeSubsystem) {
+    // public static SequenceStateMachine getStateMachine(ElevatorSubsystem elevatorSubsystem, ArmSubsystem armSubsystem, HandClamperSubsystem clamperSubsystem, HandIntakeSubsystem intakeSubsystem) {
+    // if(stateMachine == null) {
+    //     stateMachine = new SequenceStateMachine(elevatorSubsystem, armSubsystem, clamperSubsystem, intakeSubsystem);
+    // }
+    // return stateMachine;
+// }
+    public static SequenceStateMachine getStateMachine(ElevatorSubsystem elevatorSubsystem) {
         if(stateMachine == null) {
-            stateMachine = new SequenceStateMachine(elevatorSubsystem, armSubsystem, clamperSubsystem, intakeSubsystem);
+            stateMachine = new SequenceStateMachine(elevatorSubsystem);
         }
         return stateMachine;
     }
 
     public static Sequence getSequence() {
-        return SequenceFactory.getSequence(levelSelection, pieceSelection, actionSelection);
+        //return SequenceFactory.getSequence(levelSelection, pieceSelection, actionSelection);
+        return SequenceFactory.getSequence(levelSelection);
     }
 }

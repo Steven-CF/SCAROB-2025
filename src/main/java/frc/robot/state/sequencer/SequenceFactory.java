@@ -11,7 +11,8 @@ import frc.robot.state.sequencer.transitions.CoralScoreTransitions;
 import frc.robot.state.sequencer.transitions.ResetTransitions;
 
 public class SequenceFactory {
-    public static Sequence getSequence(Level levelSelection, GamePiece pieceSelection, Action actionSelection) { 
+    //public static Sequence getSequence(Level levelSelection, GamePiece pieceSelection, Action actionSelection) {
+    public static Sequence getSequence(Level levelSelection) { 
         /*
          * CORAL SEQUENCES
          */
@@ -19,25 +20,25 @@ public class SequenceFactory {
         //Currently disabled may not need
         //if(pieceSelection == GamePiece.CORAL && levelSelection == Level.L1 && actionSelection == Action.INTAKE) return Sequence.INTAKE_CORAL_FLOOR;
         //if(pieceSelection == GamePiece.CORAL && levelSelection == Level.L1 && actionSelection == Action.INTAKE) return Sequence.INTAKE_CORAL_FLOOR_UPRIGHT;
-        if(pieceSelection == GamePiece.CORAL && levelSelection == Level.L2 && actionSelection == Action.INTAKE) return Sequence.INTAKE_CORAL_FEEDER;
+        //if(levelSelection == Level.L2) return Sequence.INTAKE_CORAL_FEEDER;
         // Coral score
-        if(pieceSelection == GamePiece.CORAL && levelSelection == Level.L1 && actionSelection == Action.SCORE) return Sequence.SCORE_CORAL_L1;
-        if(pieceSelection == GamePiece.CORAL && levelSelection == Level.L2 && actionSelection == Action.SCORE) return Sequence.SCORE_CORAL_L2;
-        if(pieceSelection == GamePiece.CORAL && levelSelection == Level.L3 && actionSelection == Action.SCORE) return Sequence.SCORE_CORAL_L3;
-        if(pieceSelection == GamePiece.CORAL && levelSelection == Level.L4 && actionSelection == Action.SCORE) return Sequence.SCORE_CORAL_L4;
+        if(levelSelection == Level.L1) return Sequence.SCORE_CORAL_L1;
+        if(levelSelection == Level.L2) return Sequence.SCORE_CORAL_L2;
+        if(levelSelection == Level.L3) return Sequence.SCORE_CORAL_L3;
+        if(levelSelection == Level.L4) return Sequence.SCORE_CORAL_L4;
 
         /*
          * ALGAE SEQUENCES
          */
         // Algae intake
-        if(pieceSelection == GamePiece.ALGAE && levelSelection == Level.L1 && actionSelection == Action.INTAKE) return Sequence.INTAKE_ALGAE_FLOOR;
-        if(pieceSelection == GamePiece.ALGAE && levelSelection == Level.L2 && actionSelection == Action.INTAKE) return Sequence.INTAKE_ALGAE_L2;
-        if(pieceSelection == GamePiece.ALGAE && levelSelection == Level.L3 && actionSelection == Action.INTAKE) return Sequence.INTAKE_ALGAE_L3;
+        // if(pieceSelection == GamePiece.ALGAE && levelSelection == Level.L1 && actionSelection == Action.INTAKE) return Sequence.INTAKE_ALGAE_FLOOR;
+        // if(pieceSelection == GamePiece.ALGAE && levelSelection == Level.L2 && actionSelection == Action.INTAKE) return Sequence.INTAKE_ALGAE_L2;
+        // if(pieceSelection == GamePiece.ALGAE && levelSelection == Level.L3 && actionSelection == Action.INTAKE) return Sequence.INTAKE_ALGAE_L3;
         // Algae score
-        if(pieceSelection == GamePiece.ALGAE && levelSelection == Level.L1 && actionSelection == Action.SCORE) return Sequence.HANDOFF_ALGAE;
-        if(pieceSelection == GamePiece.ALGAE && levelSelection == Level.L2 && actionSelection == Action.SCORE) return Sequence.SHOOT_ALGAE;
-        if(pieceSelection == GamePiece.ALGAE && levelSelection == Level.L3 && actionSelection == Action.SCORE) return Sequence.SHOOT_ALGAE;
-        if(pieceSelection == GamePiece.ALGAE && levelSelection == Level.L4 && actionSelection == Action.SCORE) return Sequence.SHOOT_ALGAE;
+        // if(pieceSelection == GamePiece.ALGAE && levelSelection == Level.L1 && actionSelection == Action.SCORE) return Sequence.HANDOFF_ALGAE;
+        // if(pieceSelection == GamePiece.ALGAE && levelSelection == Level.L2 && actionSelection == Action.SCORE) return Sequence.SHOOT_ALGAE;
+        // if(pieceSelection == GamePiece.ALGAE && levelSelection == Level.L3 && actionSelection == Action.SCORE) return Sequence.SHOOT_ALGAE;
+        // if(pieceSelection == GamePiece.ALGAE && levelSelection == Level.L4 && actionSelection == Action.SCORE) return Sequence.SHOOT_ALGAE;
 
         return null;
     }

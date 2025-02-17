@@ -10,8 +10,11 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.commands.ResetSequenceCommand;
+import frc.robot.commands.RunSequenceCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -95,6 +98,12 @@ public class RobotContainer {
     dA.whileTrue(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L2))); //while pressed set to Level 3
 
     dX.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(50)));
+
+    dLeftBumper.whileTrue(new SequentialCommandGroup(
+      new InstantCommand(() -> SequenceManager.setActionSelection(Action.INTAKE)),
+      new ResetSequenceCommand(elevatorSubsystem),
+      new RunSequenceCommand(elevatorSubsystem)));
+
   }
 // I will fix the red when the code is complete this is a pase holder for now BTW this code will not be red when we add the states and the other classes that are needed I just need to fix the code in states and then we can add it 
   /**
