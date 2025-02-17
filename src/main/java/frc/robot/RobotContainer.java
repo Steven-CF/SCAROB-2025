@@ -110,11 +110,10 @@ public class RobotContainer {
     dX.whileTrue(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L1))) //while pressed set to Level 1
       .onFalse(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L2))); //if not pressed set defualt to Level 2
 
-    dLeftBumper.whileTrue(new SequentialCommandGroup(
-      new InstantCommand(() -> SequenceManager.setActionSelection(Action.INTAKE)),
-      new ResetSequenceCommand(elevatorSubsystem),
-      new RunSequenceCommand(elevatorSubsystem)));
-
+  //   dLeftBumper.whileTrue(new SequentialCommandGroup(
+  //     new InstantCommand(() -> SequenceManager.setActionSelection(Action.INTAKE)),
+  //     new ResetSequenceCommand(elevatorSubsystem),
+  //     new RunSequenceCommand(elevatorSubsystem)));
   }
 // I will fix the red when the code is complete this is a pase holder for now BTW this code will not be red when we add the states and the other classes that are needed I just need to fix the code in states and then we can add it 
   /**
@@ -124,4 +123,5 @@ public class RobotContainer {
    */
   //public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-  }
+  //}
+}
