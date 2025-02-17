@@ -36,40 +36,40 @@ public class PositionsFactory {
     public static Positions getCoralScoreL1Positions() {
         Positions positions = new Positions();
         positions.raiseElevatorPosition = CORAL_L1.raiseElevatorPosition;
-        positions.raiseElevatorThreshold = CORAL_L1.raiseElevatorThresholdPosition;
-        positions.lowerElevatorThreshold = CORAL_L1.lowerElevatorThresholdPosition;
-        positions.armForwardPosition = CORAL_L1.armForwardPosition;
-        positions.armScoringPosition = CORAL_L1.armScorePosition;
+        // positions.raiseElevatorThreshold = CORAL_L1.raiseElevatorThresholdPosition;
+        // positions.lowerElevatorThreshold = CORAL_L1.lowerElevatorThresholdPosition;
+        // positions.armForwardPosition = CORAL_L1.armForwardPosition;
+        // positions.armScoringPosition = CORAL_L1.armScorePosition;
         return positions;
     }
 
     public static Positions getCoralScoreL2Positions() {
         Positions positions = new Positions();
         positions.raiseElevatorPosition = CORAL_L2.raiseElevatorPosition;
-        positions.raiseElevatorThreshold = CORAL_L2.raiseElevatorThresholdPosition;
-        positions.lowerElevatorThreshold = CORAL_L2.lowerElevatorThresholdPosition;
-        positions.armForwardPosition = CORAL_L2.armForwardPosition;
-        positions.armScoringPosition = CORAL_L2.armScorePosition;
+        // positions.raiseElevatorThreshold = CORAL_L2.raiseElevatorThresholdPosition;
+        // positions.lowerElevatorThreshold = CORAL_L2.lowerElevatorThresholdPosition;
+        // positions.armForwardPosition = CORAL_L2.armForwardPosition;
+        // positions.armScoringPosition = CORAL_L2.armScorePosition;
         return positions;
     }
 
     public static Positions getCoralScoreL3Positions() {
         Positions positions = new Positions();
         positions.raiseElevatorPosition = CORAL_L3.raiseElevatorPosition;
-        positions.raiseElevatorThreshold = CORAL_L3.raiseElevatorThresholdPosition;
-        positions.lowerElevatorThreshold = CORAL_L3.lowerElevatorThresholdPosition;
-        positions.armForwardPosition = CORAL_L3.armForwardPosition;
-        positions.armScoringPosition = CORAL_L3.armScorePosition;
+        // positions.raiseElevatorThreshold = CORAL_L3.raiseElevatorThresholdPosition;
+        // positions.lowerElevatorThreshold = CORAL_L3.lowerElevatorThresholdPosition;
+        // positions.armForwardPosition = CORAL_L3.armForwardPosition;
+        // positions.armScoringPosition = CORAL_L3.armScorePosition;
         return positions;
     }
 
     public static Positions getCoralScoreL4Positions() {
         Positions positions = new Positions();
         positions.raiseElevatorPosition = CORAL_L4.raiseElevatorPosition;
-        positions.raiseElevatorThreshold = CORAL_L4.raiseElevatorThresholdPosition;
-        positions.lowerElevatorThreshold = CORAL_L4.lowerElevatorThresholdPosition;
-        positions.armForwardPosition = CORAL_L4.armForwardPosition;
-        positions.armScoringPosition = CORAL_L4.armScorePosition;
+        // positions.raiseElevatorThreshold = CORAL_L4.raiseElevatorThresholdPosition;
+        // positions.lowerElevatorThreshold = CORAL_L4.lowerElevatorThresholdPosition;
+        // positions.armForwardPosition = CORAL_L4.armForwardPosition;
+        // positions.armScoringPosition = CORAL_L4.armScorePosition;
         return positions;
     }
 

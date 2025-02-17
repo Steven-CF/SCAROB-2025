@@ -16,5 +16,6 @@ public enum SequenceState implements State {
     UPDATING_LEVEL,
     INIT_RESET,
     RESETTING,
+    ELEVATOR_DONE,
     FINISHING
 }
