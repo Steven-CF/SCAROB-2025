@@ -32,7 +32,6 @@ public class IntakeCoral extends Command {
         if (hasCoral == true && coralManipulator.reachedPosition() == true) {
             return true;
         }
-        return false;
     }
 
     @Override
