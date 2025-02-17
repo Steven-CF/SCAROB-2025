@@ -30,6 +30,9 @@ public final class Constants {
 
   public class Slapdown {
     public static final int SlAPDOWN_ANGLE_ID = 51;
+    public static final int SLAPDOWN_ROLLER_ID = 52;
+
+    public static final int SLAPDOWN_SENSOR_ID = 53;
   }
 
 }
