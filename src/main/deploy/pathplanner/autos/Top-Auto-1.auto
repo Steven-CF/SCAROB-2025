@@ -7,25 +7,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "1-CoralPathMid"
+            "pathName": "1-CoralPathTop"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Mid"
+            "pathName": "newcoral-1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BottomOutSideBall"
+            "pathName": "coral-2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Depo"
+            "pathName": "newcoral-2"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top-Coral-3"
           }
         }
       ]
