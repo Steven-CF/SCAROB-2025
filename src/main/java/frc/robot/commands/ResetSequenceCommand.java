@@ -5,17 +5,11 @@ import frc.robot.state.sequencer.SequenceInput;
 import frc.robot.state.sequencer.SequenceStateMachine;
 import frc.robot.state.sequencer.Sequence;
 import frc.robot.state.sequencer.SequenceManager;
-import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
-import frc.robot.subsystems.hand.HandClamperSubsystem;
-import frc.robot.subsystems.hand.HandIntakeSubsystem;
 
 public class ResetSequenceCommand extends Command {
     SequenceStateMachine m_scoreStateMachine;
     ElevatorSubsystem m_elevatorSubsystem;
-    ArmSubsystem m_armSubsystem;
-    HandClamperSubsystem m_clamperSubsystem;
-    HandIntakeSubsystem m_intakeSubsystem;
     boolean m_sequenceDone = false;
 
     private CommandCallback stateMachineCallback = () -> {

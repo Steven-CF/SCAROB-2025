@@ -17,8 +17,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.subsystems.arm.*;
-import frc.robot.subsystems.hand.*;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.commands.RunSequenceCommand;
 
@@ -67,9 +65,6 @@ public class RobotContainer {
   
   //Subsystems are declared here 
   private ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem(true);
-  private ArmSubsystem armsubsystem = new ArmSubsystem(true);
-  private HandClamperSubsystem clamperSubsystem = new HandClamperSubsystem(true);
-  private HandIntakeSubsystem handintakeSubsystem = new HandIntakeSubsystem(true);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -115,7 +110,6 @@ public class RobotContainer {
   //     new ResetSequenceCommand(elevatorSubsystem),
   //     new RunSequenceCommand(elevatorSubsystem)));
   }
-// I will fix the red when the code is complete this is a pase holder for now BTW this code will not be red when we add the states and the other classes that are needed I just need to fix the code in states and then we can add it 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

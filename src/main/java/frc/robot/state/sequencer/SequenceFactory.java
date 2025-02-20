@@ -87,8 +87,8 @@ public class SequenceFactory {
             /*
              * CORAL POSITIONS
              */
-            case INTAKE_CORAL_FEEDER: return PositionsFactory.getCoralFeederPickupPositions();
-            case INTAKE_CORAL_FLOOR: return null; // TODO needs definition
+            // case INTAKE_CORAL_FEEDER: return PositionsFactory.getCoralFeederPickupPositions();
+            // case INTAKE_CORAL_FLOOR: return null; // TODO needs definition
             //Currently disabled may not need
             //case INTAKE_CORAL_FLOOR_UPRIGHT: return PositionsFactory.getCoralUprightFloorPickupPositions();
             case SCORE_CORAL_L1: return PositionsFactory.getCoralScoreL1Positions();
@@ -99,11 +99,11 @@ public class SequenceFactory {
             /*
              * ALGAE POSITIONS
              */
-            case INTAKE_ALGAE_L2: return PositionsFactory.getAlgaeReefL2PickupPositions();
-            case INTAKE_ALGAE_L3: return PositionsFactory.getAlgaeReefL3PickupPositions();
-            case INTAKE_ALGAE_FLOOR: return PositionsFactory.getAlgaeFloorPickupPositions();
-            case SHOOT_ALGAE: return PositionsFactory.getAlgaeScoreBargePositions();
-            case HANDOFF_ALGAE: return PositionsFactory.getAlgaeHandoffPositions();
+            // case INTAKE_ALGAE_L2: return PositionsFactory.getAlgaeReefL2PickupPositions();
+            // case INTAKE_ALGAE_L3: return PositionsFactory.getAlgaeReefL3PickupPositions();
+            // case INTAKE_ALGAE_FLOOR: return PositionsFactory.getAlgaeFloorPickupPositions();
+            // case SHOOT_ALGAE: return PositionsFactory.getAlgaeScoreBargePositions();
+            // case HANDOFF_ALGAE: return PositionsFactory.getAlgaeHandoffPositions();
         
             default:
                 return null;

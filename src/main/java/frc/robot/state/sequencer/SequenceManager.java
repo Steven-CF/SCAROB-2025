@@ -1,9 +1,7 @@
 package frc.robot.state.sequencer;
 
 import frc.robot.subsystems.Elevator.*;
-import frc.robot.subsystems.arm.ArmSubsystem;
-import frc.robot.subsystems.hand.HandClamperSubsystem;
-import frc.robot.subsystems.hand.HandIntakeSubsystem;
+
 
 public class SequenceManager {
     private static SequenceStateMachine stateMachine;

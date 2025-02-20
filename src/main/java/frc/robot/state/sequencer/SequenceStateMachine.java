@@ -5,18 +5,11 @@ import frc.robot.state.Input;
 import frc.robot.state.StateMachine;
 import frc.robot.state.StateMachineCallback;
 import frc.robot.state.sequencer.positions.Positions;
-import frc.robot.subsystems.arm.ArmConstants;
-import frc.robot.subsystems.arm.ArmSubsystem;
-import frc.robot.subsystems.hand.HandIntakeSubsystem;
-import frc.robot.subsystems.hand.HandClamperSubsystem;
-import frc.robot.subsystems.hand.HandConstants;
 
 public class SequenceStateMachine extends StateMachine {
+
     // subsystems
     private ElevatorSubsystem elevatorSubsystem;
-    private ArmSubsystem armSubsystem;
-    private HandIntakeSubsystem handIntakeSubsystem;
-    private HandClamperSubsystem handClamperSubsystem;
 
     // sequence tracking
     private Sequence currentSequence;
@@ -73,15 +66,11 @@ public class SequenceStateMachine extends StateMachine {
             SequenceInput sequenceInput = (SequenceInput)input;
             if(sequenceInput == SequenceInput.ELEVATOR_THRESHOLD_MET) setInput(input); // not home yet
             if(sequenceInput == SequenceInput.ELEVATOR_DONE) elevatorResetDone = true;
-            if(sequenceInput == SequenceInput.ARM_DONE) armResetDone = true;
-            if(elevatorResetDone && armResetDone) {
+            if(elevatorResetDone) {
                 isResetting = false;
                 setInput(SequenceInput.RESET_DONE);
             }
         } else {
-            if(input == SequenceInput.RELEASED_PIECE) closeHand();
-            if(input == SequenceInput.DETECTED_PIECE && currentGamePiece == GamePiece.CORAL) returnHandToDefault();
-            if(currentSequence == Sequence.SCORE_CORAL_L2 && input == SequenceInput.ARM_DONE && currentState == SequenceState.SCORING) releasePiece();
             setInput(input);
         }
     }
@@ -120,66 +109,66 @@ public class SequenceStateMachine extends StateMachine {
         return true;
     }
 
-    public boolean moveArmForward() {
-        armSubsystem.moveArm(positions.armForwardPosition, subsystemCallback);
-        return true;
-    }
+    // public boolean moveArmForward() {
+    //     armSubsystem.moveArm(positions.armForwardPosition, subsystemCallback);
+    //     return true;
+    // }
 
-    public boolean checkIfShouldScore() {
-        // TODO put autonomous handling in here when ready
-        handIntakeSubsystem.watchForScoreDetection(subsystemCallback);
-        return true;
-    }
+    // public boolean checkIfShouldScore() {
+    //     // TODO put autonomous handling in here when ready
+    //     handIntakeSubsystem.watchForScoreDetection(subsystemCallback);
+    //     return true;
+    // }
 
-    public boolean moveArmToScore() {
-        armSubsystem.moveArm(positions.armScoringPosition, subsystemCallback);
-        return true;
-    }
+    // public boolean moveArmToScore() {
+    //     armSubsystem.moveArm(positions.armScoringPosition, subsystemCallback);
+    //     return true;
+    // }
 
-    public boolean moveArmHome() {
-        armSubsystem.moveArm(ArmConstants.armHomePosition, subsystemCallback);
-        return true;
-    }
+    // public boolean moveArmHome() {
+    //     armSubsystem.moveArm(ArmConstants.armHomePosition, subsystemCallback);
+    //     return true;
+    // }
 
-    public boolean closeHand() {
-        handClamperSubsystem.close();
-        return true;
-    }
+    // public boolean closeHand() {
+    //     handClamperSubsystem.close();
+    //     return true;
+    // }
 
-    public boolean returnHandToDefault() {
-        handClamperSubsystem.close();
-        handIntakeSubsystem.stop();
-        return true;
-    }
+    // public boolean returnHandToDefault() {
+    //     handClamperSubsystem.close();
+    //     handIntakeSubsystem.stop();
+    //     return true;
+    // }
 
-    public boolean prepareToIntake() {
-        handClamperSubsystem.open(positions.clamperIntakePosition);
-        handIntakeSubsystem.intake(HandConstants.intakeVelocity, subsystemCallback);
-        return true;
-    }
+    // public boolean prepareToIntake() {
+    //     handClamperSubsystem.open(positions.clamperIntakePosition);
+    //     handIntakeSubsystem.intake(HandConstants.intakeVelocity, subsystemCallback);
+    //     return true;
+    // }
 
-    public boolean stopIntaking() {
-        handClamperSubsystem.close();
-        handIntakeSubsystem.stop(subsystemCallback);
-        return true;
-    }
+    // public boolean stopIntaking() {
+    //     handClamperSubsystem.close();
+    //     handIntakeSubsystem.stop(subsystemCallback);
+    //     return true;
+    // }
 
-    public boolean holdAndLower() {
-        handClamperSubsystem.moveHand(positions.clamperHoldPosition);
-        elevatorSubsystem.moveElevator(ElevatorConstants.elevatorHomePosition, subsystemCallback);
-        return true;
-    }
+    // public boolean holdAndLower() {
+    //     handClamperSubsystem.moveHand(positions.clamperHoldPosition);
+    //     elevatorSubsystem.moveElevator(ElevatorConstants.elevatorHomePosition, subsystemCallback);
+    //     return true;
+    // }
 
-    public boolean releasePiece() {
-        handIntakeSubsystem.stop();
-        handIntakeSubsystem.release(HandConstants.intakeVelocity, HandConstants.defaultReleaseRuntime);
-        return true;
-    }
+    // public boolean releasePiece() {
+    //     handIntakeSubsystem.stop();
+    //     handIntakeSubsystem.release(HandConstants.intakeVelocity, HandConstants.defaultReleaseRuntime);
+    //     return true;
+    // }
 
-    public boolean shootToScore() {
-        handIntakeSubsystem.release(HandConstants.scoreAlgaeVelocity, HandConstants.defaultReleaseRuntime, subsystemCallback);
-        return true;
-    }
+    // public boolean shootToScore() {
+    //     handIntakeSubsystem.release(HandConstants.scoreAlgaeVelocity, HandConstants.defaultReleaseRuntime, subsystemCallback);
+    //     return true;
+    // }
 
     // Drive the elevator to a new position when the operator overrides it midstream
     public boolean updateElevator() {
@@ -192,33 +181,31 @@ public class SequenceStateMachine extends StateMachine {
         return true;
     }
 
-    // Used to return the arm home (and stop intake) before driving the elevator to a new position
-    public boolean returnArmForUpdate() {
-        if(currentAction == Action.INTAKE) {
-            handClamperSubsystem.close();
-            handIntakeSubsystem.stop();
-        }
-        armSubsystem.moveArm(ArmConstants.armHomePosition, subsystemCallback);
-        return true;
-    }
+    // // Used to return the arm home (and stop intake) before driving the elevator to a new position
+    // public boolean returnArmForUpdate() {
+    //     if(currentAction == Action.INTAKE) {
+    //         handClamperSubsystem.close();
+    //         handIntakeSubsystem.stop();
+    //     }
+    //     armSubsystem.moveArm(ArmConstants.armHomePosition, subsystemCallback);
+    //     return true;
+    // }
 
     public boolean startReset() {
         isResetting = true;
         // stop current movements
-        armSubsystem.stopArm();
         elevatorSubsystem.stopElevator();
         // move back home
-        armSubsystem.moveArm(ArmConstants.armHomePosition, subsystemCallback);
         elevatorSubsystem.moveElevator(ElevatorConstants.elevatorHomePosition, subsystemCallback);
         return true;
     }
 
-    public boolean startIntakeReset() {
-        handClamperSubsystem.close();
-        handIntakeSubsystem.stop();
-        startReset();
-        return true;
-    }
+    // public boolean startIntakeReset() {
+    //     handClamperSubsystem.close();
+    //     handIntakeSubsystem.stop();
+    //     startReset();
+    //     return true;
+    // }
 
     public boolean resetState() {
         currentSequence = null;
