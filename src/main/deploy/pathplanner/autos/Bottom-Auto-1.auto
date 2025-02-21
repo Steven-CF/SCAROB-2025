@@ -7,25 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "1-CoralPathTop"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "newcoral-1"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "TopCoral-2"
+            "pathName": "1-CoralPathBottom"
           }
         },
         {
@@ -35,13 +17,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "newcoral-2"
+                  "pathName": "BottomNewCoral-1"
                 }
               },
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.0
+                  "waitTime": 1.5
                 }
               }
             ]
@@ -50,7 +32,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Top-Coral-3"
+            "pathName": "BottomCoral-1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BottomNewCoralPath-2"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "New Path"
           }
         }
       ]
