@@ -9,6 +9,7 @@ import frc.robot.state.sequencer.transitions.AlgaeScoreBargeTransitions;
 import frc.robot.state.sequencer.transitions.CoralFeederPickupTransitions;
 import frc.robot.state.sequencer.transitions.CoralScoreTransitions;
 import frc.robot.state.sequencer.transitions.ResetTransitions;
+import frc.robot.state.sequencer.transitions.TestTransitions;
 
 public class SequenceFactory {
     //public static Sequence getSequence(Level levelSelection, GamePiece pieceSelection, Action actionSelection) {
@@ -61,7 +62,7 @@ public class SequenceFactory {
             case SCORE_CORAL_L2:
             case SCORE_CORAL_L3:
             case SCORE_CORAL_L4:
-                return CoralScoreTransitions.getTransitionTable();
+                return TestTransitions.getTransitionTable();
 
             /*
              * ALGAE TRANSITIONS

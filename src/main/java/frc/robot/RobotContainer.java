@@ -5,10 +5,12 @@
 package frc.robot;
 
 import frc.robot.state.sequencer.*;
+import frc.robot.state.sequencer.positions.PositionConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Elevator.ElevatorConstants;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.commands.ResetSequenceCommand;
 import frc.robot.commands.RunSequenceCommand;
@@ -82,9 +84,9 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
-    dRightTrigger.whileTrue(new SequentialCommandGroup(
-      new InstantCommand(() -> SequenceManager.setActionSelection(Action.SCORE)),
-      new RunSequenceCommand(elevatorSubsystem)));
+    // dRightTrigger.onTrue(new SequentialCommandGroup(
+    //   new InstantCommand(() -> SequenceManager.setActionSelection(Action.SCORE)),
+    //   new RunSequenceCommand(elevatorSubsystem)));
     // Climb up
     //dLeftBumper.whileTrue(new InstantCommand(() -> climbSubsystem.moveClimb(0)))
       //.whileFalse(new InstantCommand(() -> climbSubsystem.stopClimb()));
@@ -94,16 +96,11 @@ public class RobotContainer {
     //.whileFalse(new InstantCommand(() -> climbSubsystem.stopClimb()));
 
     // Controls level selection
-    dY.whileTrue(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L4))) //while pressed set to Level 4
-      .onFalse(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L2))); //if not pressed set defualt to Level 2  
-
-    dB.whileTrue(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L3))) //while pressed set to Level 3
-      .onFalse(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L2))); //if not pressed set defualt to Level 2 
-
-    dA.whileTrue(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L2))); //while pressed set to Level 3
-
-    dX.whileTrue(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L1))) //while pressed set to Level 1
-      .onFalse(new InstantCommand(() -> SequenceManager.setLevelSelection(Level.L2))); //if not pressed set defualt to Level 2
+    dY.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(30)))
+      .onFalse(new InstantCommand(() -> elevatorSubsystem.moveElevator(0.1))); //if not pressed set defualt to Level 2  on
+    dB.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(17))); //if not pressed set defualt to Level 2 on
+    dA.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(9))); //while pressed set to Level 3on
+    dX.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(4))); //while pressed set to Level 1
 
   //   dLeftBumper.whileTrue(new SequentialCommandGroup(
   //     new InstantCommand(() -> SequenceManager.setActionSelection(Action.INTAKE)),

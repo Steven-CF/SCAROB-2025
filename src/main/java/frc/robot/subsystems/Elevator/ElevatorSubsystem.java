@@ -77,7 +77,7 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
     public void moveElevator(double position, StateMachineCallback callback, double threshold) {
         stateMachineCallback = callback;
         callbackOnThreshold = true;
-        positionThreshold = threshold;
+        positionThreshold = threshold * ElevatorConstants.gearRatioModifier;
         raisingThreshold = threshold < position;
         moveElevator(position);
     }
@@ -109,7 +109,7 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
 
         Slot0Configs slot0 = cfg.Slot0;
         slot0.kG = 0.16;
-        slot0.kP = 4.9;
+        slot0.kP = 1.5;
         slot0.kI = 0;
         slot0.kD = 0.0078125;
         slot0.kV = 6.86;
@@ -183,7 +183,7 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
     }
 
     public boolean isAtPosition(double position) {
-        double tolerance = 1;
+        double tolerance = 0.1;
         return Math.abs(getElevatorPosition() - position) < tolerance;
     }
 

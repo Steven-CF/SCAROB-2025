@@ -29,7 +29,7 @@ public final class PositionConstants {
         }
 
         public static final class CORAL_L4 {
-            public final static double raiseElevatorPosition = 27;
+            public final static double raiseElevatorPosition = 30;
         }
     }
 
