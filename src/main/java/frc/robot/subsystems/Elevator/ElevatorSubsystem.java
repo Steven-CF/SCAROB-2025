@@ -95,7 +95,7 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
         System.out.println("elevatorSubsystem: Starting UP & Initializing elevator motors !!!!!!");
         leaderMotor = new TalonFX(ElevatorConstants.leaderMotorid, "rio");
         followerMotor = new TalonFX(ElevatorConstants.followerMotorid, "rio");
-        Follower followLeader = new Follower(ElevatorConstants.leaderMotorid, true);
+        Follower followLeader = new Follower(ElevatorConstants.leaderMotorid, false);
         TalonFXConfiguration cfg = new TalonFXConfiguration();
         leaderMotor.getConfigurator().apply(cfg);
         followerMotor.getConfigurator().apply(cfg);
