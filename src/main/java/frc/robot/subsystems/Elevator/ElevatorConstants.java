@@ -3,8 +3,8 @@ package frc.robot.subsystems.Elevator;
 import com.ctre.phoenix6.signals.InvertedValue;
 
 public final class ElevatorConstants {
-    public final static int elevatorCanId1 = 31;
-    public final static int elevatorCanId2 = 32;
+    public final static int leaderMotorid = 31;
+    public final static int followerMotorid = 32;
     public final static double gearRatioModifier = (1);
     //Outputs
     public final static double idleOutput = 0;

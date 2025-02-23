@@ -5,6 +5,7 @@ import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -19,8 +20,8 @@ import frc.robot.subsystems.ToggleableSubsystem;
 public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsystem {
 
     // motors for the elevator
-    private TalonFX elevatorMotor1;
-    private TalonFX elevatorMotor2;
+    private TalonFX leaderMotor;
+    private TalonFX followerMotor;
     private double desiredPosition;
 
     // motor movement
@@ -64,8 +65,7 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
             desiredPosition = position * ElevatorConstants.gearRatioModifier;
         }
 
-        elevatorMotor1.setControl(mmReq1.withPosition(desiredPosition).withFeedForward(arbitraryFeedForward));
-        elevatorMotor2.setControl(mmReq1.withPosition(desiredPosition).withFeedForward(arbitraryFeedForward));
+        leaderMotor.setControl(mmReq1.withPosition(desiredPosition).withFeedForward(arbitraryFeedForward));
        
     }
 
@@ -84,8 +84,7 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
 
     public void stopElevator() {
         if(!enabled) return;
-        elevatorMotor1.setControl(brake);
-        elevatorMotor2.setControl(brake);
+        leaderMotor.setControl(brake);
     }
 
     // Initialize Motors
@@ -94,11 +93,13 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
             return;
 
         System.out.println("elevatorSubsystem: Starting UP & Initializing elevator motors !!!!!!");
-        elevatorMotor1 = new TalonFX(ElevatorConstants.elevatorCanId1, "rio");
-        elevatorMotor2 = new TalonFX(ElevatorConstants.elevatorCanId2, "rio");
+        leaderMotor = new TalonFX(ElevatorConstants.leaderMotorid, "rio");
+        followerMotor = new TalonFX(ElevatorConstants.followerMotorid, "rio");
+        Follower followLeader = new Follower(ElevatorConstants.leaderMotorid, true);
         TalonFXConfiguration cfg = new TalonFXConfiguration();
-        elevatorMotor1.getConfigurator().apply(cfg);
-        elevatorMotor2.getConfigurator().apply(cfg);
+        leaderMotor.getConfigurator().apply(cfg);
+        followerMotor.getConfigurator().apply(cfg);
+        followerMotor.setControl(followLeader);
 
         /* Configure current limits */
         MotionMagicConfigs mm = cfg.MotionMagic;
@@ -126,7 +127,7 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
         cfg.MotorOutput.Inverted = ElevatorConstants.elevatorMotor1Direction;
         StatusCode status = StatusCode.StatusCodeNotInitialized;
         for (int i = 0; i < 5; ++i) {
-            status = elevatorMotor1.getConfigurator().apply(cfg);
+            status = leaderMotor.getConfigurator().apply(cfg);
             if (status.isOK())
                 break;
         }
@@ -139,7 +140,7 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
         status = StatusCode.StatusCodeNotInitialized;
          
         for (int i = 0; i < 5; ++i) {
-            status = elevatorMotor2.getConfigurator().apply(cfg);
+            status = followerMotor.getConfigurator().apply(cfg);
             if (status.isOK())
                 break;
         }
@@ -148,10 +149,10 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
         }
         
 
-        elevatorMotor1.setPosition(0);
-        elevatorMotor2.setPosition(0);
-        elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
-        elevatorMotor2.setNeutralMode(NeutralModeValue.Brake);
+        leaderMotor.setPosition(0);
+        followerMotor.setPosition(0); //TODO: check if this is needed
+        leaderMotor.setNeutralMode(NeutralModeValue.Brake);
+        followerMotor.setNeutralMode(NeutralModeValue.Brake); //TODO: check if this is needed
 
     }
 
@@ -183,7 +184,7 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
     public double getElevatorPosition() {
         if (!enabled)
             return 0;
-        return elevatorMotor1.getPosition().getValueAsDouble();
+        return leaderMotor.getPosition().getValueAsDouble();
     }
 
     public boolean isAtPosition(double position) {
@@ -192,25 +193,25 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
     }
 
     private void log(){
-        SmartDashboard.putNumber("elevator motor 1 position", elevatorMotor1.getPosition().getValueAsDouble());
-        SmartDashboard.putNumber("elevator motor 2 position", elevatorMotor2.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("elevator motor 1 position", leaderMotor.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("elevator motor 2 position", followerMotor.getPosition().getValueAsDouble());
         SmartDashboard.putNumber("elevator desired position", desiredPosition);
         SmartDashboard.putNumber("elevator motor 1 closedLoopError",
-                elevatorMotor1.getClosedLoopError().getValueAsDouble());
+                leaderMotor.getClosedLoopError().getValueAsDouble());
         SmartDashboard.putNumber("elevator motor 1 closedLoopError",
-                elevatorMotor1.getClosedLoopError().getValueAsDouble());
+                leaderMotor.getClosedLoopError().getValueAsDouble());
         SmartDashboard.putNumber("elevator motor 1 closedLoopReference",
-                elevatorMotor1.getClosedLoopReference().getValueAsDouble());
+                leaderMotor.getClosedLoopReference().getValueAsDouble());
         SmartDashboard.putNumber("elevator motor 2 closedLoopReference",
-                elevatorMotor2.getClosedLoopReference().getValueAsDouble());
+                followerMotor.getClosedLoopReference().getValueAsDouble());
         SmartDashboard.putNumber("elevator motor 1 closedLoopOutput",
-                elevatorMotor1.getClosedLoopOutput().getValueAsDouble());
+                leaderMotor.getClosedLoopOutput().getValueAsDouble());
         SmartDashboard.putNumber("elevator motor 2 closedLoopOutput",
-                elevatorMotor2.getClosedLoopOutput().getValueAsDouble());
+                followerMotor.getClosedLoopOutput().getValueAsDouble());
         SmartDashboard.putNumber("elevator motor 1 statorCurrent",
-                elevatorMotor1.getStatorCurrent().getValueAsDouble());
+                leaderMotor.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("elevator motor 2 statorCurrent",
-                elevatorMotor2.getStatorCurrent().getValueAsDouble());
+                followerMotor.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Arbitrary Feed Forward", arbitraryFeedForward);
     }
 }
