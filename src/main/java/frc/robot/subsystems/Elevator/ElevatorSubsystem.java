@@ -102,8 +102,8 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
 
         /* Configure current limits */
         MotionMagicConfigs mm = cfg.MotionMagic;
-        mm.MotionMagicCruiseVelocity = 85; // 5 rotations per second cruise
-        mm.MotionMagicAcceleration = 20; // Ta200ke approximately 0.5 seconds to reach max vel
+        mm.MotionMagicCruiseVelocity = 10; // 5 rotations per second cruise
+        mm.MotionMagicAcceleration = 5; // Ta200ke approximately 0.5 seconds to reach max vel
         // Take approximately 0.2 seconds to reach max accel
         mm.MotionMagicJerk = 0;
 
@@ -117,6 +117,10 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
 
         FeedbackConfigs fdb = cfg.Feedback;
         fdb.SensorToMechanismRatio = 1;
+
+        cfg.CurrentLimits.StatorCurrentLimit = 80;
+        cfg.CurrentLimits.SupplyCurrentLowerLimit = 60;
+        cfg.CurrentLimits.StatorCurrentLimitEnable = true;
 
         // Apply the configs for Motor 1
         cfg.MotorOutput.Inverted = ElevatorConstants.elevatorMotor1Direction;
@@ -183,7 +187,7 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
     }
 
     public boolean isAtPosition(double position) {
-        double tolerance = 0.1;
+        double tolerance = 2;
         return Math.abs(getElevatorPosition() - position) < tolerance;
     }
 
