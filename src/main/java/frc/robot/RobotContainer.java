@@ -96,7 +96,7 @@ public class RobotContainer {
     //.whileFalse(new InstantCommand(() -> climbSubsystem.stopClimb()));
 
     // Controls level selection
-    dY.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(30)))
+    dY.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(36)))
       .onFalse(new InstantCommand(() -> elevatorSubsystem.moveElevator(0.1))); //if not pressed set defualt to Level 2  on
     dB.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(17))); //if not pressed set defualt to Level 2 on
     dA.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(9))); //while pressed set to Level 3on

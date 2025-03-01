@@ -95,27 +95,27 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
         System.out.println("elevatorSubsystem: Starting UP & Initializing elevator motors !!!!!!");
         leaderMotor = new TalonFX(ElevatorConstants.leaderMotorid, "rio");
         followerMotor = new TalonFX(ElevatorConstants.followerMotorid, "rio");
-        Follower followLeader = new Follower(ElevatorConstants.leaderMotorid, false);
+        // Follower followLeader = new Follower(ElevatorConstants.leaderMotorid, false);
         TalonFXConfiguration cfg = new TalonFXConfiguration();
         leaderMotor.getConfigurator().apply(cfg);
         followerMotor.getConfigurator().apply(cfg);
-        followerMotor.setControl(followLeader);
+        followerMotor.setControl(new Follower(ElevatorConstants.leaderMotorid,false));
 
         /* Configure current limits */
         MotionMagicConfigs mm = cfg.MotionMagic;
         mm.MotionMagicCruiseVelocity = 10; // 5 rotations per second cruise
-        mm.MotionMagicAcceleration = 5; // Ta200ke approximately 0.5 seconds to reach max vel
+        mm.MotionMagicAcceleration = 5; // Take approximately 0.5 seconds to reach max vel
         // Take approximately 0.2 seconds to reach max accel
         mm.MotionMagicJerk = 0;
 
         Slot0Configs slot0 = cfg.Slot0;
-        slot0.kG = 0.4;
-        slot0.kP = 50;
-        slot0.kI = 0;
-        slot0.kD = 0;
-        slot0.kV = 5.25;
-        slot0.kS = 0.05; // Approximately 0.25V to get the mechanism moving
-
+        // Working PID
+        slot0.kG = 0.01; //0.4
+        slot0.kP = 1; // 50
+        slot0.kI = 0; // 0
+        slot0.kD = 0.1; // 0
+        slot0.kV = 0; // 5.25
+        slot0.kS = 0; // 0.05
         FeedbackConfigs fdb = cfg.Feedback;
         fdb.SensorToMechanismRatio = 1;
 
