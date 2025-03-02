@@ -5,7 +5,7 @@ import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.hardware.CANcoder;
@@ -20,7 +20,8 @@ import frc.robot.subsystems.ToggleableSubsystem;
 
 public class ClimbSubsystem extends SubsystemBase implements ToggleableSubsystem{
         
-    private TalonFX climbMotor;
+    private TalonFX leaderClimbMotor;
+    private TalonFX followerClimbMotor;
     private CANcoder climbCancoder;
     private MotionMagicVoltage mmReq = new MotionMagicVoltage(0);
     private final NeutralOut brake = new NeutralOut();
@@ -63,12 +64,12 @@ public class ClimbSubsystem extends SubsystemBase implements ToggleableSubsystem
             desiredPosition = position;
         }
 
-        climbMotor.setControl(mmReq.withPosition(desiredPosition).withFeedForward(arbitraryFeedForward));
+        leaderClimbMotor.setControl(mmReq.withPosition(desiredPosition).withFeedForward(arbitraryFeedForward));
     }
 
     public void stopClimb(){
         if(!enabled) return;
-        climbMotor.setControl(brake);
+        leaderClimbMotor.setControl(brake);
     }
 
     public void stowClimb(){
@@ -81,10 +82,13 @@ public class ClimbSubsystem extends SubsystemBase implements ToggleableSubsystem
         
         System.out.println("ClimbSubsystem: Starting Up & Initializing Climb Motor !!!!");
 
-        climbMotor = new TalonFX(ClimbConstants.climbCanId, "canivore1");
+        leaderClimbMotor = new TalonFX(ClimbConstants.leaderClimbMotorId, "rio");
+        followerClimbMotor = new TalonFX(ClimbConstants.followerClimbMotorId, "rio");
         TalonFXConfiguration config = new TalonFXConfiguration();
-        climbMotor.getConfigurator().apply(config);
-        
+        leaderClimbMotor.getConfigurator().apply(config);
+        followerClimbMotor.getConfigurator().apply(config);
+        followerClimbMotor.setControl(new Follower(ClimbConstants.leaderClimbMotorId,false));
+
          /* Configure current limits */
         MotionMagicConfigs mm = config.MotionMagic;
         mm.MotionMagicCruiseVelocity = 70; // 5 rotations per second cruise
@@ -113,7 +117,7 @@ public class ClimbSubsystem extends SubsystemBase implements ToggleableSubsystem
         config.MotorOutput.Inverted = ClimbConstants.climbMotorDirection;
         StatusCode status = StatusCode.StatusCodeNotInitialized;
         for (int i = 0; i < 5; ++i) {
-            status = climbMotor.getConfigurator().apply(config);
+            status = leaderClimbMotor.getConfigurator().apply(config);
             if (status.isOK())
                 break;
         }
@@ -121,8 +125,10 @@ public class ClimbSubsystem extends SubsystemBase implements ToggleableSubsystem
             System.out.println("Could not configure device. Error: " + status.toString());
         }
 
-        climbMotor.setPosition(0);
-        climbMotor.setNeutralMode(NeutralModeValue.Brake);
+        leaderClimbMotor.setPosition(0);
+        followerClimbMotor.setPosition(0); // TODO: check if this is needed
+        leaderClimbMotor.setNeutralMode(NeutralModeValue.Brake);
+        followerClimbMotor.setNeutralMode(NeutralModeValue.Brake); // TODO: check if this is needed
     }
 
     public void periodic(){
@@ -143,7 +149,7 @@ public class ClimbSubsystem extends SubsystemBase implements ToggleableSubsystem
     public double getClimbPosition(){
         if (!enabled) 
             return 0;
-        return climbMotor.getPosition().getValueAsDouble();
+        return leaderClimbMotor.getPosition().getValueAsDouble();
     }
 
     public boolean isAtPosition(double position){
@@ -152,16 +158,16 @@ public class ClimbSubsystem extends SubsystemBase implements ToggleableSubsystem
     }
 
     public void log(){
-                SmartDashboard.putNumber("climb motor position", climbMotor.getPosition().getValueAsDouble());
+                SmartDashboard.putNumber("climb motor position", leaderClimbMotor.getPosition().getValueAsDouble());
         SmartDashboard.putNumber("desired climb position", desiredPosition);
         SmartDashboard.putNumber("climb motor closedLoopError",
-            climbMotor.getClosedLoopError().getValueAsDouble());
+            leaderClimbMotor.getClosedLoopError().getValueAsDouble());
         SmartDashboard.putNumber("climb motor closedLoopReference",
-            climbMotor.getClosedLoopReference().getValueAsDouble());
+            leaderClimbMotor.getClosedLoopReference().getValueAsDouble());
         SmartDashboard.putNumber("climb motor closedLoopOutput",
-            climbMotor.getClosedLoopOutput().getValueAsDouble());
+            leaderClimbMotor.getClosedLoopOutput().getValueAsDouble());
         SmartDashboard.putNumber("climb motor statorCurrent",
-            climbMotor.getStatorCurrent().getValueAsDouble());
+            leaderClimbMotor.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("arbitrary feed forward",
             arbitraryFeedForward);
     }

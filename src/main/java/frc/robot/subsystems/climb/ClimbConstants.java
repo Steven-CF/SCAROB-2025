@@ -6,6 +6,8 @@ public class ClimbConstants {
     
     // climb can ID
     public final static int climbCanId = 31;
+    public final static int leaderClimbMotorId = 60;
+    public final static int followerClimbMotorId = 61;
 
     // motor direction
     public final static InvertedValue climbMotorDirection = InvertedValue.CounterClockwise_Positive;
