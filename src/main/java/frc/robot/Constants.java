@@ -34,4 +34,19 @@ public final class Constants {
     /** Replaying from a log file. */
     REPLAY
   }
+
+  public class CoralManipulator {
+    public static final int CORAL_MANIPULATOR_1_ID = 41;
+    public static final int CORAL_MANIPULATOR_2_ID = 42;
+
+    public static final int CORAL_SENSOR_ID = 43;
+  }
+
+  public class Slapdown {
+    public static final int SlAPDOWN_ANGLE_ID = 51;
+    public static final int SLAPDOWN_ROLLER_1_ID = 52;
+    public static final int SLAPDOWN_ROLLER_2_ID = 53;
+
+    public static final int SLAPDOWN_SENSOR_ID = 54;
+  }
 }
