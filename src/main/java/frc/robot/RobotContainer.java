@@ -162,10 +162,16 @@ public class RobotContainer {
                 .ignoringDisable(true));
 
     controller.leftBumper()
-        .whileTrue(new InstantCommand(() -> slapdownSubsystem.outtakeRollers()))
+        .whileTrue(
+            new InstantCommand(() -> slapdownSubsystem.outtakeRollers()))
         .onFalse(new InstantCommand(() -> slapdownSubsystem.stopRollers()));
     controller.rightBumper()
-        .whileTrue(new InstantCommand(() -> slapdownSubsystem.intakeRollers()))
+        .whileTrue(new InstantCommand(() -> {
+            if (slapdownSubsystem.detectAlgae() == true) {
+                slapdownSubsystem.stopRollers();
+            }
+            slapdownSubsystem.intakeRollers();
+        }))
         .onFalse(new InstantCommand(() -> slapdownSubsystem.stopRollers()));
     controller.a().onTrue(new InstantCommand(() -> sensorSubsytem.stopSensorBasedCommads()));
   }
