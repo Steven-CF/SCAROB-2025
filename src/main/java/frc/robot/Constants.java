@@ -49,7 +49,7 @@ public final class Constants {
 
     public static final int SLAPDOWN_SENSOR_ID = 54;
   }
-  
+
   public class Intake {
     public static final int INTAKE_ID = 61;
     public static final int INTAKE_SENSOR_ID = 62;

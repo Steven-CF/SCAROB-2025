@@ -19,22 +19,22 @@ public class SlapdownIntake extends Command {
 
   @Override
   public void initialize() {
-    slapdown.angleDown();
+    // slapdown.angleDown();
   }
 
   @Override
   public void execute() {
 
-    if (slapdown.reachedAngle(24)) {
-      slapdown.stopAngle();
-      slapdown.startRollers();
-    }
+  //   if (slapdown.reachedAngle(24)) {
+  //     slapdown.stopAngle();
+  //     slapdown.startRollers();
+  //   }
 
-    if (slapdown.detectAlgae() == true || sensor.commandStop == true) {
-      slapdown.stopRollers();
-      slapdown.angleUp();
-      hasAlgae = true;
-    }
+  //   if (slapdown.detectAlgae() == true || sensor.commandStop == true) {
+  //     slapdown.stopRollers();
+  //     slapdown.angleUp();
+  //     hasAlgae = true;
+  //   }
   }
 
   @Override
@@ -47,8 +47,8 @@ public class SlapdownIntake extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    slapdown.stopAngle();
-    sensor.commandStop = false;
-    hasAlgae = false;
+    // slapdown.stopAngle();
+    // sensor.commandStop = false;
+    // hasAlgae = false;
   }
 }

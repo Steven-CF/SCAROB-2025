@@ -161,8 +161,8 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-    controller.leftBumper().onTrue(intakeCoralCommand);
-    controller.rightBumper().whileTrue(new InstantCommand(() -> slapdownSubsystem.startRollers()));
+    controller.leftBumper().whileTrue(new InstantCommand(() -> slapdownSubsystem.intakeRollers()));
+    controller.rightBumper().whileTrue(new InstantCommand(() -> slapdownSubsystem.outtakeRollers()));
     controller.a().onTrue(new InstantCommand(() -> sensorSubsytem.stopSensorBasedCommads()));
   }
 

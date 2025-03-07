@@ -1,9 +1,9 @@
 package frc.robot.subsystems.intake;
 
 import au.grapplerobotics.LaserCan;
-import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -18,13 +18,19 @@ public class SlapdownSubsystem extends SubsystemBase {
       new SparkFlex(Constants.Slapdown.SLAPDOWN_ROLLER_2_ID, MotorType.kBrushless);
   private final LaserCan slapdownSensor = new LaserCan(Constants.Slapdown.SLAPDOWN_SENSOR_ID);
   // Initialize the closed loop controller
-  private final SparkClosedLoopController slapdown_controller = slapdownAngleMotor.getClosedLoopController();
+  private final SparkClosedLoopController slapdown_controller =
+      slapdownAngleMotor.getClosedLoopController();
 
   public SlapdownSubsystem() {}
 
-  public void startRollers() {
+  public void intakeRollers() {
     slapdownRoller1Motor.set(0.5);
     slapdownRoller2Motor.set(-0.5);
+  }
+
+  public void outtakeRollers() {
+    slapdownRoller1Motor.set(-0.5);
+    slapdownRoller2Motor.set(0.5);
   }
 
   public void stopRollers() {
