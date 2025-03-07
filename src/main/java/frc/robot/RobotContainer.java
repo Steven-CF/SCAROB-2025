@@ -161,8 +161,8 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-    controller.leftBumper().whileTrue(new InstantCommand(() -> slapdownSubsystem.intakeRollers())).onFalse(new InstantCommand(() -> slapdownSubsystem.stopRollers()));
-    controller.rightBumper().whileTrue(new InstantCommand(() -> slapdownSubsystem.outtakeRollers())).onFalse(new InstantCommand(() -> slapdownSubsystem.stopRollers()));
+    controller.leftBumper().whileTrue(new InstantCommand(() -> slapdownSubsystem.outtakeRollers())).onFalse(new InstantCommand(() -> slapdownSubsystem.stopRollers()));
+    controller.rightBumper().whileTrue(new InstantCommand(() -> slapdownSubsystem.intakeRollers())).onFalse(new InstantCommand(() -> slapdownSubsystem.stopRollers()));
     controller.a().onTrue(new InstantCommand(() -> sensorSubsytem.stopSensorBasedCommads()));
   }
 

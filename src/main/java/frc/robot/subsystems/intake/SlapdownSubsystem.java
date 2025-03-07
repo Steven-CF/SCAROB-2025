@@ -23,12 +23,12 @@ public class SlapdownSubsystem extends SubsystemBase {
 
   public SlapdownSubsystem() {}
 
-  public void intakeRollers() {
+  public void outtakeRollers() {
     slapdownRoller1Motor.set(0.5);
     slapdownRoller2Motor.set(-0.5);
   }
 
-  public void outtakeRollers() {
+  public void intakeRollers() {
     slapdownRoller1Motor.set(-0.5);
     slapdownRoller2Motor.set(0.5);
   }
