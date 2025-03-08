@@ -180,7 +180,6 @@ public class RobotContainer {
         .onFalse(new InstantCommand(() -> slapdownSubsystem.stopRollers()));
     controller.a().onTrue(new InstantCommand(() -> sensorSubsytem.stopSensorBasedCommads()));
   }
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
