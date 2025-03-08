@@ -25,16 +25,16 @@ public class SlapdownIntake extends Command {
   @Override
   public void execute() {
 
-  //   if (slapdown.reachedAngle(24)) {
-  //     slapdown.stopAngle();
-  //     slapdown.startRollers();
-  //   }
+    //   if (slapdown.reachedAngle(24)) {
+    //     slapdown.stopAngle();
+    //     slapdown.startRollers();
+    //   }
 
-  //   if (slapdown.detectAlgae() == true || sensor.commandStop == true) {
-  //     slapdown.stopRollers();
-  //     slapdown.angleUp();
-  //     hasAlgae = true;
-  //   }
+    //   if (slapdown.detectAlgae() == true || sensor.commandStop == true) {
+    //     slapdown.stopRollers();
+    //     slapdown.angleUp();
+    //     hasAlgae = true;
+    //   }
   }
 
   @Override

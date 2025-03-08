@@ -14,6 +14,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -162,17 +163,20 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-    controller.leftBumper()
-        .whileTrue(
-            new InstantCommand(() -> slapdownSubsystem.outtakeRollers()))
+    controller
+        .leftBumper()
+        .whileTrue(new InstantCommand(() -> slapdownSubsystem.outtakeRollers()))
         .onFalse(new InstantCommand(() -> slapdownSubsystem.stopRollers()));
-    controller.rightBumper()
-        .whileTrue(new RunCommand(() -> {
-            if (slapdownSubsystem.detectAlgae() == true) {
-                slapdownSubsystem.stopRollers();
-            }
-            slapdownSubsystem.intakeRollers();
-        }))
+    controller
+        .rightBumper()
+        .whileTrue(
+            new RunCommand(
+                () -> {
+                  if (slapdownSubsystem.detectAlgae() == true) {
+                    slapdownSubsystem.stopRollers();
+                  }
+                  slapdownSubsystem.intakeRollers();
+                }))
         .onFalse(new InstantCommand(() -> slapdownSubsystem.stopRollers()));
     controller.a().onTrue(new InstantCommand(() -> sensorSubsytem.stopSensorBasedCommads()));
   }
