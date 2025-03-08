@@ -24,11 +24,13 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.IntakeCoral;
 import frc.robot.commands.SlapdownIntake;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -50,10 +52,12 @@ public class RobotContainer {
   // Subsystems
   private final Drive drive;
 
-  // Controller
-  private final CommandXboxController controller = new CommandXboxController(0);
+  private final CommandXboxController xboxDriverController = new CommandXboxController(0);
+  private final CommandXboxController xboxOperatorController = new CommandXboxController(1);
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
+
+  private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem(true);
 
   private final CoralManipulatorSubsystem intakeSubsystem = new CoralManipulatorSubsystem();
   private final SlapdownSubsystem slapdownSubsystem = new SlapdownSubsystem();
@@ -63,6 +67,37 @@ public class RobotContainer {
   private final SlapdownIntake slapdownIntake =
       new SlapdownIntake(slapdownSubsystem, sensorSubsytem);
 
+  /* Driver Buttons */
+  private final Trigger dStart = xboxDriverController.start();
+  private final Trigger dBack = xboxDriverController.back();
+  private final Trigger dY = xboxDriverController.y();
+  private final Trigger dB = xboxDriverController.b();
+  private final Trigger dA = xboxDriverController.a();
+  private final Trigger dX = xboxDriverController.x();
+  private final Trigger dLeftBumper = xboxDriverController.leftBumper();
+  private final Trigger dRightBumper = xboxDriverController.rightBumper();
+  private final Trigger dLeftTrigger = xboxDriverController.leftTrigger();
+  private final Trigger dRightTrigger = xboxDriverController.rightTrigger();
+  private final Trigger dPOVDown = xboxDriverController.povDown(); 
+  private final Trigger dPOVUp = xboxDriverController.povUp(); 
+  private final Trigger dPOVLeft = xboxDriverController.povLeft();
+  private final Trigger dPOVRight = xboxDriverController.povRight();
+
+  /* Operator Buttons */
+  private final Trigger opStart = xboxOperatorController.start();
+  private final Trigger opBack = xboxOperatorController.back();
+  private final Trigger opY = xboxOperatorController.y();
+  private final Trigger opB = xboxOperatorController.b();
+  private final Trigger opA = xboxOperatorController.a();
+  private final Trigger opX = xboxOperatorController.x();
+  private final Trigger opLeftBumper = xboxOperatorController.leftBumper();
+  private final Trigger opRightBumper = xboxOperatorController.rightBumper();
+  private final Trigger opLeftTrigger = xboxOperatorController.leftTrigger();
+  private final Trigger opRightTrigger = xboxOperatorController.rightTrigger();
+  private final Trigger opPOVDown = xboxOperatorController.povDown();
+  private final Trigger opPOVUp = xboxOperatorController.povUp();
+  private final Trigger opPOVLeft = xboxOperatorController.povLeft();
+  private final Trigger opPOVRight = xboxOperatorController.povRight();
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     switch (Constants.currentMode) {
@@ -131,43 +166,49 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    // Elevator 
+    dY.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(36)))
+      .onFalse(new InstantCommand(() -> elevatorSubsystem.moveElevator(0.1))); //if not pressed set defualt to Level 2  on
+    dB.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(17))); //if not pressed set defualt to Level 2 on
+    dA.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(9))); //while pressed set to Level 3on
+    dX.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(4))); //while pressed set to Level 1
     // Default command, normal field-relative drive
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> controller.getLeftY(),
-            () -> controller.getLeftX(),
-            () -> -controller.getRightX()));
+            () -> xboxDriverController.getLeftY(),
+            () -> xboxDriverController.getLeftX(),
+            () -> -xboxDriverController.getRightX()));
 
     // Lock to 0° when A button is held
-    controller
-        .a()
-        .whileTrue(
-            DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -controller.getLeftY(),
-                () -> -controller.getLeftX(),
-                () -> new Rotation2d()));
+    // controller
+    //     .a()
+    //     .whileTrue(
+    //         DriveCommands.joystickDriveAtAngle(
+    //             drive,
+    //             () -> -controller.getLeftY(),
+    //             () -> -controller.getLeftX(),
+    //             () -> new Rotation2d()));
 
     // Switch to X pattern when X button is pressed
-    controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+    // controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
 
     // Reset gyro to 0° when B button is pressed
-    controller
-        .b()
-        .onTrue(
-            Commands.runOnce(
-                    () ->
-                        drive.setPose(
-                            new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
-                    drive)
-                .ignoringDisable(true));
+    // controller
+    //     .b()
+    //     .onTrue(
+    //         Commands.runOnce(
+    //                 () ->
+    //                     drive.setPose(
+    //                         new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
+    //                 drive)
+    //             .ignoringDisable(true));
 
-    controller
+    xboxDriverController
         .leftBumper()
         .whileTrue(new InstantCommand(() -> slapdownSubsystem.outtakeRollers()))
         .onFalse(new InstantCommand(() -> slapdownSubsystem.stopRollers()));
-    controller
+    xboxDriverController
         .rightBumper()
         .whileTrue(
             new RunCommand(
@@ -178,7 +219,7 @@ public class RobotContainer {
                   slapdownSubsystem.intakeRollers();
                 }))
         .onFalse(new InstantCommand(() -> slapdownSubsystem.stopRollers()));
-    controller.a().onTrue(new InstantCommand(() -> sensorSubsytem.stopSensorBasedCommads()));
+    // controller.a().onTrue(new InstantCommand(() -> sensorSubsytem.stopSensorBasedCommads()));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
