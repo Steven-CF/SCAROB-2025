@@ -217,6 +217,10 @@ public class Drive extends SubsystemBase {
     gyroDisconnectedAlert.set(!gyroInputs.connected && Constants.currentMode != Mode.SIM);
   }
 
+  public Rotation2d getHeading() {
+    return gyroInputs.odometryYawPositions[0];
+  }
+
   /**
    * Runs the drive at the desired velocity.
    *
@@ -266,6 +270,9 @@ public class Drive extends SubsystemBase {
     stop();
   }
 
+  public void resetGyro() {
+    gyroIO.reset();
+  }
   /** Returns a command to run a quasistatic test in the specified direction. */
   public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
     return run(() -> runCharacterization(0.0))

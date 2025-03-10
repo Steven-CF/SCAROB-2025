@@ -14,15 +14,12 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -78,8 +75,8 @@ public class RobotContainer {
   private final Trigger dRightBumper = xboxDriverController.rightBumper();
   private final Trigger dLeftTrigger = xboxDriverController.leftTrigger();
   private final Trigger dRightTrigger = xboxDriverController.rightTrigger();
-  private final Trigger dPOVDown = xboxDriverController.povDown(); 
-  private final Trigger dPOVUp = xboxDriverController.povUp(); 
+  private final Trigger dPOVDown = xboxDriverController.povDown();
+  private final Trigger dPOVUp = xboxDriverController.povUp();
   private final Trigger dPOVLeft = xboxDriverController.povLeft();
   private final Trigger dPOVRight = xboxDriverController.povRight();
 
@@ -153,6 +150,10 @@ public class RobotContainer {
         "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+    autoChooser.addOption(
+        "Temp",
+        Commands.deadline(
+            new WaitCommand(1), DriveCommands.joystickDrive(drive, () -> 1, () -> 0, () -> 0)));
 
     // Register the Named Commands
     // Configure the button bindings
@@ -166,12 +167,27 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // Elevator 
-    dY.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(36)))
-      .onFalse(new InstantCommand(() -> elevatorSubsystem.moveElevator(0.1))); //if not pressed set defualt to Level 2  on
-    dB.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(17))); //if not pressed set defualt to Level 2 on
-    dA.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(9))); //while pressed set to Level 3on
-    dX.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(4))); //while pressed set to Level 1
+    // Elevator
+    dY.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(37)))
+        .onFalse(
+            new InstantCommand(
+                () ->
+                    elevatorSubsystem.moveElevator(
+                        0.1))); // if not pressed set defualt to Level 2  on
+    // dB.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(17)))
+    //     .onFalse(
+    //         new InstantCommand(
+    //             () ->
+    //                 elevatorSubsystem.moveElevator(
+    //                     0.1))); // if not pressed set defualt to Level 2 on
+    dA.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(9)))
+        .onFalse(
+            new InstantCommand(
+                () -> elevatorSubsystem.moveElevator(0.1))); // while pressed set to Level 3on
+    dX.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(4)))
+        .onFalse(
+            new InstantCommand(
+                () -> elevatorSubsystem.moveElevator(0.1))); // while pressed set to Level 1
     // Default command, normal field-relative drive
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
@@ -181,45 +197,31 @@ public class RobotContainer {
             () -> -xboxDriverController.getRightX()));
 
     // Lock to 0° when A button is held
-    // controller
+    // xboxDriverController
     //     .a()
     //     .whileTrue(
     //         DriveCommands.joystickDriveAtAngle(
     //             drive,
-    //             () -> -controller.getLeftY(),
-    //             () -> -controller.getLeftX(),
+    //             () -> -xboxDriverController.getLeftY(),
+    //             () -> -xboxDriverController.getLeftX(),
     //             () -> new Rotation2d()));
 
     // Switch to X pattern when X button is pressed
     // controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
 
     // Reset gyro to 0° when B button is pressed
-    // controller
-    //     .b()
-    //     .onTrue(
-    //         Commands.runOnce(
-    //                 () ->
-    //                     drive.setPose(
-    //                         new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
-    //                 drive)
-    //             .ignoringDisable(true));
+    dB.onTrue(Commands.runOnce(() -> drive.resetGyro()));
 
-    xboxDriverController
-        .leftBumper()
+    dLeftBumper
+        .whileTrue(new InstantCommand(() -> slapdownSubsystem.intakeRollers()))
+        .onFalse(new InstantCommand(() -> slapdownSubsystem.stopRollers()));
+    dRightBumper
         .whileTrue(new InstantCommand(() -> slapdownSubsystem.outtakeRollers()))
         .onFalse(new InstantCommand(() -> slapdownSubsystem.stopRollers()));
-    xboxDriverController
-        .rightBumper()
-        .whileTrue(
-            new RunCommand(
-                () -> {
-                  if (slapdownSubsystem.detectAlgae() == true) {
-                    slapdownSubsystem.stopRollers();
-                  }
-                  slapdownSubsystem.intakeRollers();
-                }))
-        .onFalse(new InstantCommand(() -> slapdownSubsystem.stopRollers()));
-    // controller.a().onTrue(new InstantCommand(() -> sensorSubsytem.stopSensorBasedCommads()));
+    dLeftTrigger.onTrue(new InstantCommand(() -> slapdownSubsystem.angleIntake(-3)));
+    dRightTrigger.onTrue(new InstantCommand(() -> slapdownSubsystem.angleIntake(0)));
+    dPOVUp.onTrue(new InstantCommand(() -> slapdownSubsystem.angleIntake(-3.353)));
+    // dLeftTrigger.onTrue(new InstantCommand(() -> sensorSubsytem.stopSensorBasedCommads()));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

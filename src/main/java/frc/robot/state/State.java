@@ -1,5 +1,3 @@
 package frc.robot.state;
 
-public interface State {
-    
-}
+public interface State {}
