@@ -11,19 +11,31 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "named",
+          "data": {
+            "name": "Coral-outtake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BottomNewCoral-1"
+          }
+        },
+        {
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "BottomNewCoral-1"
+                  "name": "Coral-Intake"
                 }
               },
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.5
+                  "waitTime": 0.5
                 }
               }
             ]
@@ -36,21 +48,46 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Coral-outtake"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "BottomNewCoralPath-2"
           }
         },
         {
-          "type": "wait",
+          "type": "parallel",
           "data": {
-            "waitTime": 1.5
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Coral-Intake"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.5
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "New Path"
+            "pathName": "BottomCoral-3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral-outtake"
           }
         }
       ]
