@@ -121,7 +121,7 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
     slot0.kG = 1; // 0.01
     slot0.kP = 1; // 1
     slot0.kI = 0; // 0
-    slot0.kD = 0.1; // 0.1
+    slot0.kD = 0; // 0.1
     slot0.kV = 0; // 0
     slot0.kS = 0; // 0
     FeedbackConfigs fdb = cfg.Feedback;
