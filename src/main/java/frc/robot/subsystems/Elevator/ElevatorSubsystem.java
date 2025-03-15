@@ -1,5 +1,9 @@
 package frc.robot.subsystems.Elevator;
 
+import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.Volts;
+
+import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
@@ -8,10 +12,13 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.NeutralOut;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.state.Score.ScoreInput;
 import frc.robot.state.StateMachineCallback;
 import frc.robot.subsystems.ToggleableSubsystem;
@@ -35,6 +42,8 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
   private double positionThreshold = 0;
   private boolean raisingThreshold = false;
 
+  private final VoltageOut m_voltReq = new VoltageOut(0.0);
+
   private boolean enabled;
 
   @Override
@@ -56,9 +65,10 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
     if (!enabled) return;
 
     // do not go outside boundary thresholds
-    if (position > ElevatorConstants.maxElevatorPosition) {
+    if (position * ElevatorConstants.gearRatioModifier > ElevatorConstants.maxElevatorPosition) {
       desiredPosition = ElevatorConstants.maxElevatorPosition;
-    } else if (position < ElevatorConstants.minElevatorPosition) {
+    } else if (position * ElevatorConstants.gearRatioModifier
+        < ElevatorConstants.minElevatorPosition) {
       desiredPosition = ElevatorConstants.minElevatorPosition;
     } else {
       desiredPosition = position * ElevatorConstants.gearRatioModifier;
@@ -101,15 +111,15 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
 
     /* Configure current limits */
     MotionMagicConfigs mm = cfg.MotionMagic;
-    mm.MotionMagicCruiseVelocity = 10; // 5 rotations per second cruise
-    mm.MotionMagicAcceleration = 5; // Take approximately 0.5 seconds to reach max vel
+    mm.MotionMagicCruiseVelocity = 0.01; // 5 rotations per second cruise
+    mm.MotionMagicAcceleration = 0.01; // Take approximately 0.5 seconds to reach max vel
     // Take approximately 0.2 seconds to reach max accel
     mm.MotionMagicJerk = 0;
 
     Slot0Configs slot0 = cfg.Slot0;
     // Working PID
     slot0.kG = 1; // 0.01
-    slot0.kP = 10; // 1
+    slot0.kP = 1; // 1
     slot0.kI = 0; // 0
     slot0.kD = 0.1; // 0.1
     slot0.kV = 0; // 0
@@ -214,5 +224,26 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
     SmartDashboard.putNumber(
         "elevator motor 2 statorCurrent", followerMotor.getStatorCurrent().getValueAsDouble());
     SmartDashboard.putNumber("Arbitrary Feed Forward", arbitraryFeedForward);
+  }
+
+  private final SysIdRoutine m_sysIdRoutine =
+      new SysIdRoutine(
+          new SysIdRoutine.Config(
+              Volts.of(0.2).per(Second), // Use default ramp rate (1 V/s)
+              Volts.of(0.2), // Reduce dynamic step voltage to 4 to prevent brownout
+              null, // Use default timeout (10 s)
+              // Log state with Phoenix SignalLogger class
+              (state) -> SignalLogger.writeString("state", state.toString())),
+          new SysIdRoutine.Mechanism(
+              (volts) -> leaderMotor.setControl(m_voltReq.withOutput(volts.in(Volts))),
+              null,
+              this));
+
+  public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+    return m_sysIdRoutine.quasistatic(direction);
+  }
+
+  public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+    return m_sysIdRoutine.dynamic(direction);
   }
 }
