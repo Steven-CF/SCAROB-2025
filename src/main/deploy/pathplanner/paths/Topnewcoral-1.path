@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.748869839822053,
-        "y": 4.818952313463967
+        "x": 5.6570091933294915,
+        "y": 4.941933522031096
       },
       "isLocked": false,
       "linkedName": null
@@ -20,12 +20,12 @@
         "y": 6.995109577922077
       },
       "prevControl": {
-        "x": 0.6471890021901648,
-        "y": 7.231855691171238
+        "x": 0.8029199579372739,
+        "y": 7.162314755229882
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "TopCoralPickup"
     }
   ],
   "rotationTargets": [],
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -143.20470619156876
+    "rotation": -51.81361941189389
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Coral-1-Paths",
   "idealStartingState": {
     "velocity": 4.5,
     "rotation": -119.654

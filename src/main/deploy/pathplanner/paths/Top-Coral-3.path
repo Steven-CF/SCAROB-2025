@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.14,
-        "y": 6.995
+        "x": 1.1396103896103895,
+        "y": 6.995109577922077
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3705308236101152,
-        "y": 6.898275962834248
+        "x": 1.3701412132205049,
+        "y": 6.898385540756324
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "TopCoralPickup"
     },
     {
       "anchor": {
@@ -45,10 +45,10 @@
     "rotation": -59.588918732874596
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Coral-3-Paths",
   "idealStartingState": {
     "velocity": 4.5,
-    "rotation": -143.205
+    "rotation": -51.81361941189389
   },
   "useDefaultConstraints": true
 }
