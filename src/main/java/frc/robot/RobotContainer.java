@@ -57,11 +57,13 @@ public class RobotContainer {
 
   private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem(true);
 
-  private final CoralManipulatorSubsystem coralManipulatorSubsystem = new CoralManipulatorSubsystem();
+  private final CoralManipulatorSubsystem coralManipulatorSubsystem =
+      new CoralManipulatorSubsystem();
   private final SlapdownSubsystem slapdownSubsystem = new SlapdownSubsystem();
   private final SensorSubsytem sensorSubsytem = new SensorSubsytem();
 
-  private final IntakeCoral intakeCoralCommand = new IntakeCoral(coralManipulatorSubsystem, sensorSubsytem);
+  private final IntakeCoral intakeCoralCommand =
+      new IntakeCoral(coralManipulatorSubsystem, sensorSubsytem);
   private final SlapdownIntake slapdownIntake =
       new SlapdownIntake(slapdownSubsystem, sensorSubsytem);
 
@@ -169,27 +171,27 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Elevator
-    // dY.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(37)))
-    //     .onFalse(
-    //         new InstantCommand(
-    //             () ->
-    //                 elevatorSubsystem.moveElevator(
-    //                     0.1))); // if not pressed set defualt to Level 2  on
-    // dB.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(17)))
-    //     .onFalse(
-    //         new InstantCommand(
-    //             () ->
-    //                 elevatorSubsystem.moveElevator(
-    //                     0.1))); // if not pressed set defualt to Level 2 on
+    dY.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(31)))
+        .onFalse(
+            new InstantCommand(
+                () ->
+                    elevatorSubsystem.moveElevator(
+                        0.1))); // if not pressed set defualt to Level 2  on
+    dB.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(17)))
+        .onFalse(
+            new InstantCommand(
+                () ->
+                    elevatorSubsystem.moveElevator(
+                        0.1))); // if not pressed set defualt to Level 2 on
 
-    // dA.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(9)))
-    //     .onFalse(
-    //         new InstantCommand(
-    //             () -> elevatorSubsystem.moveElevator(0.1))); // while pressed set to Level 3on
-    // dX.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(4)))
-    //     .onFalse(
-    //         new InstantCommand(
-    //             () -> elevatorSubsystem.moveElevator(0.1))); // while pressed set to Level 1
+    dA.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(9)))
+        .onFalse(
+            new InstantCommand(
+                () -> elevatorSubsystem.moveElevator(0.1))); // while pressed set to Level 3on
+    dX.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(4)))
+        .onFalse(
+            new InstantCommand(
+                () -> elevatorSubsystem.moveElevator(0.1))); // while pressed set to Level 1
     // Default command, normal field-relative drive
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
@@ -220,9 +222,15 @@ public class RobotContainer {
     // dRightBumper
     //     .whileTrue(new InstantCommand(() -> slapdownSubsystem.outtakeRollers()))
     //     .onFalse(new InstantCommand(() -> slapdownSubsystem.stopRollers()));
-    dLeftTrigger.onTrue(new InstantCommand(() -> slapdownSubsystem.angleIntake(-3)));
-    dRightTrigger.onTrue(new InstantCommand(() -> slapdownSubsystem.angleIntake(0)));
-    dPOVUp.onTrue(new InstantCommand(() -> slapdownSubsystem.angleIntake(-3.353)));
+    // dLeftTrigger.onTrue(new InstantCommand(() -> slapdownSubsystem.angleIntake(-3)));
+    // dRightTrigger.onTrue(new InstantCommand(() -> slapdownSubsystem.angleIntake(0)));
+    dLeftTrigger
+        .whileTrue(new InstantCommand(() -> coralManipulatorSubsystem.intake()))
+        .whileFalse(new InstantCommand(() -> coralManipulatorSubsystem.stopMotors()));
+
+    dRightTrigger.onTrue(intakeCoralCommand);
+
+    dPOVUp.onTrue(new InstantCommand(() -> slapdownSubsystem.angleIntake(-0.6)));
     // dLeftTrigger.onTrue(new InstantCommand(() -> sensorSubsytem.stopSensorBasedCommads()));
 
     dLeftBumper.onTrue(Commands.runOnce(SignalLogger::start));
@@ -234,10 +242,10 @@ public class RobotContainer {
      * Joystick B = dynamic forward
      * Joystick X = dyanmic reverse
      */
-    dY.whileTrue(elevatorSubsystem.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-    dA.whileTrue(elevatorSubsystem.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-    dB.whileTrue(elevatorSubsystem.sysIdDynamic(SysIdRoutine.Direction.kForward));
-    dX.whileTrue(elevatorSubsystem.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+    // dY.whileTrue(elevatorSubsystem.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+    // dA.whileTrue(elevatorSubsystem.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+    // dB.whileTrue(elevatorSubsystem.sysIdDynamic(SysIdRoutine.Direction.kForward));
+    // dX.whileTrue(elevatorSubsystem.sysIdDynamic(SysIdRoutine.Direction.kReverse));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

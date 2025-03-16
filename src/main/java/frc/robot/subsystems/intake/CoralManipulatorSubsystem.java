@@ -17,8 +17,8 @@ public class CoralManipulatorSubsystem extends SubsystemBase {
   public CoralManipulatorSubsystem() {}
 
   public void intake() {
-    coralManipulator1.set(-0.1);
-    coralManipulator2.set(0.1);
+    coralManipulator1.set(-0.25);
+    coralManipulator2.set(0.25);
   }
 
   public void stopMotors() {
@@ -27,7 +27,8 @@ public class CoralManipulatorSubsystem extends SubsystemBase {
   }
 
   public boolean coralDetected() {
-    if (coralSensor.getMeasurement() != null) {
+    LaserCan.Measurement measurement = coralSensor.getMeasurement();
+    if (measurement.distance_mm <= 40) {
       return true;
     }
     return false;
@@ -39,7 +40,7 @@ public class CoralManipulatorSubsystem extends SubsystemBase {
   }
 
   public boolean reachedPosition() {
-    if (coralManipulator1.getEncoder().getPosition() >= 4) {
+    if (coralManipulator2.getEncoder().getPosition() >= 5) {
       return true;
     }
     return false;

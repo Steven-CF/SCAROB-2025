@@ -111,19 +111,19 @@ public class ElevatorSubsystem extends SubsystemBase implements ToggleableSubsys
 
     /* Configure current limits */
     MotionMagicConfigs mm = cfg.MotionMagic;
-    mm.MotionMagicCruiseVelocity = 0.01; // 5 rotations per second cruise
-    mm.MotionMagicAcceleration = 0.01; // Take approximately 0.5 seconds to reach max vel
+    mm.MotionMagicCruiseVelocity = 20; // 5 rotations per second cruise
+    mm.MotionMagicAcceleration = 20; // Take approximately 0.5 seconds to reach max vel
     // Take approximately 0.2 seconds to reach max accel
     mm.MotionMagicJerk = 0;
 
     Slot0Configs slot0 = cfg.Slot0;
     // Working PID
-    slot0.kG = 1; // 0.01
-    slot0.kP = 1; // 1
+    slot0.kG = 0.22529; // 0.01
+    slot0.kP = 15; // 1
     slot0.kI = 0; // 0
     slot0.kD = 0; // 0.1
     slot0.kV = 0; // 0
-    slot0.kS = 0; // 0
+    slot0.kS = 0.15; // 0
     FeedbackConfigs fdb = cfg.Feedback;
     fdb.SensorToMechanismRatio = 1;
 
