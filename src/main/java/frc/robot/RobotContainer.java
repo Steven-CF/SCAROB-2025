@@ -164,6 +164,8 @@ public class RobotContainer {
         "MoveElevator-L4", new InstantCommand(() -> elevatorSubsystem.moveElevator(31)));
     NamedCommands.registerCommand(
         "Coral-outtake", new InstantCommand(() -> slapdownSubsystem.intakeRollers()));
+    NamedCommands.registerCommand(
+        "MoveSlapDown", new InstantCommand(() -> slapdownSubsystem.angleIntake(-0.6)));
     // Configure the button bindings
     configureButtonBindings();
   }
