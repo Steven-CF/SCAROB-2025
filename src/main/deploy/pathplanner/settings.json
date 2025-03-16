@@ -3,12 +3,14 @@
   "robotLength": 0.9,
   "holonomicMode": true,
   "pathFolders": [
-    "Coral-3",
-    "Coral-1",
-    "Coral-2",
-    "Coral-4"
+    "Coral-1-Paths",
+    "Coral-2-Paths",
+    "Coral-3-Paths",
+    "Out-Paths"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "Out-Autos"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,

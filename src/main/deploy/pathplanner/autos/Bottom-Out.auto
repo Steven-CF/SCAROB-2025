@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "bot-out"
+            "pathName": "Bottom-Out"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Out-Autos",
   "choreoAuto": false
 }

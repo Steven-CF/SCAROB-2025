@@ -13,7 +13,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "newcoral-1"
+            "pathName": "Topnewcoral-1"
           }
         },
         {
@@ -29,22 +29,9 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "newcoral-2"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.0
-                }
-              }
-            ]
+            "pathName": "Topnewcoral-2"
           }
         },
         {

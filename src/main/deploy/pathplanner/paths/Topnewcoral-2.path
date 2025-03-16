@@ -3,42 +3,35 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.306822376559102,
-        "y": 3.002238175675675
+        "x": 3.9451812371928185,
+        "y": 5.255758370160388
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.145584477207313,
-        "y": 3.3830090813569993
+        "x": 4.180603824387248,
+        "y": 5.171638185670093
       },
       "isLocked": false,
-      "linkedName": "1-CoralPathBottom"
+      "linkedName": "TopCoral-2"
     },
     {
       "anchor": {
-        "x": 1.1265202702702704,
-        "y": 1.0456503378378375
+        "x": 1.1396103896103895,
+        "y": 6.995109577922077
       },
       "prevControl": {
-        "x": 0.8264524390649801,
-        "y": 0.8994501916236863
+        "x": 0.9027113450452255,
+        "y": 7.074977235231606
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BottomNewCoral-1"
+      "linkedName": "TopCoralPickup"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "removeball",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -49,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 52.69605172201653
+    "rotation": -51.81361941189389
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Coral-2-Paths",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 121.02590483317731
+    "velocity": 4.5,
+    "rotation": -58.28118706788861
   },
   "useDefaultConstraints": true
 }
