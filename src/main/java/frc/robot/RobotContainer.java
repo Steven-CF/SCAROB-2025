@@ -16,7 +16,6 @@ package frc.robot;
 import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -161,8 +160,10 @@ public class RobotContainer {
             new WaitCommand(1), DriveCommands.joystickDrive(drive, () -> 1, () -> 0, () -> 0)));
 
     // Register the Named Commands
-    NamedCommands.registerCommand("MoveElevator-L4", new InstantCommand(() -> elevatorSubsystem.moveElevator(31)));
-    NamedCommands.registerCommand("Coral-outtake", new InstantCommand(() -> slapdownSubsystem.intakeRollers()));
+    NamedCommands.registerCommand(
+        "MoveElevator-L4", new InstantCommand(() -> elevatorSubsystem.moveElevator(31)));
+    NamedCommands.registerCommand(
+        "Coral-outtake", new InstantCommand(() -> slapdownSubsystem.intakeRollers()));
     // Configure the button bindings
     configureButtonBindings();
   }
