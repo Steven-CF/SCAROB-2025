@@ -136,6 +136,7 @@ public class RobotContainer {
         break;
     }
 
+    registerNamedCommands();
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
@@ -158,18 +159,23 @@ public class RobotContainer {
         "Temp",
         Commands.deadline(
             new WaitCommand(1), DriveCommands.joystickDrive(drive, () -> 1, () -> 0, () -> 0)));
-
-    // Register the Named Commands
-    NamedCommands.registerCommand(
-        "MoveElevator-L4", new InstantCommand(() -> elevatorSubsystem.moveElevator(31)));
-    NamedCommands.registerCommand(
-        "Coral-outtake", new InstantCommand(() -> slapdownSubsystem.intakeRollers()));
-    NamedCommands.registerCommand(
-        "MoveSlapDown", new InstantCommand(() -> slapdownSubsystem.angleIntake(-0.6)));
     // Configure the button bindings
     configureButtonBindings();
   }
 
+  private void registerNamedCommands() {
+    // Register the Named Commands
+    NamedCommands.registerCommand(
+        "MoveElevator-L4", new InstantCommand(() -> elevatorSubsystem.moveElevator(31)));
+    NamedCommands.registerCommand(
+        "Coral-outtake", new InstantCommand(() -> coralManipulatorSubsystem.intake()));
+    NamedCommands.registerCommand(
+        "MoveSlapDown", new InstantCommand(() -> slapdownSubsystem.angleIntake(-0.6)));
+    NamedCommands.registerCommand(
+        "StopCoral-outtake", new InstantCommand(() -> coralManipulatorSubsystem.stopMotors()));
+    NamedCommands.registerCommand(
+        "MoveElevator-0", new InstantCommand(() -> elevatorSubsystem.moveElevator(0)));
+  }
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link

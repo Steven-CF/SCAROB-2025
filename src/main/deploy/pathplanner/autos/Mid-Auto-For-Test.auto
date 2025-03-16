@@ -11,31 +11,63 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "MoveSlapDown"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "MoveElevator-L4"
-          }
-        },
-        {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "Coral-outtake"
+                  "name": "MoveSlapDown"
                 }
               },
               {
-                "type": "wait",
+                "type": "parallel",
                 "data": {
-                  "waitTime": 1.0
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "MoveElevator-L4"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 3.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Coral-outtake"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 2.0
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopCoral-outtake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "MoveElevator-0"
                 }
               }
             ]
