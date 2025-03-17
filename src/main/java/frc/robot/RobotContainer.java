@@ -21,7 +21,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -184,27 +186,48 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Elevator
-    dY.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(31)))
-        .onFalse(
-            new InstantCommand(
-                () ->
-                    elevatorSubsystem.moveElevator(
-                        0.1))); // if not pressed set defualt to Level 2  on
-    dB.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(17)))
-        .onFalse(
-            new InstantCommand(
-                () ->
-                    elevatorSubsystem.moveElevator(
-                        0.1))); // if not pressed set defualt to Level 2 on
+    // dY.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(31)))
+    //     .onFalse(
+    //         new InstantCommand(
+    //             () ->
+    //                 elevatorSubsystem.moveElevator(
+    //                     0.1))); 
+    dY.whileTrue(new SequentialCommandGroup( 
+                new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.score.SlapdownOut)),
+                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.score.ElevatorL4)),
+                new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.score.ElevatorL4), //needs testing 
+                new InstantCommand(() -> coralManipulatorSubsystem.intake())));
+                new WaitCommand(1);
+                new InstantCommand(() -> coralManipulatorSubsystem.stopMotors());
+                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.score.ElevatorHome));
+    
+    dB.whileTrue(new SequentialCommandGroup( 
+                new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.score.SlapdownOut)),
+                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.score.ElevatorL3)),
+                new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.score.ElevatorL3), //needs testing 
+                new InstantCommand(() -> coralManipulatorSubsystem.intake())));
+                new WaitCommand(1);
+                new InstantCommand(() -> coralManipulatorSubsystem.stopMotors());
+                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.score.ElevatorHome));
 
-    dA.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(9)))
-        .onFalse(
-            new InstantCommand(
-                () -> elevatorSubsystem.moveElevator(0.1))); // while pressed set to Level 3on
-    dX.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(4)))
-        .onFalse(
-            new InstantCommand(
-                () -> elevatorSubsystem.moveElevator(0.1))); // while pressed set to Level 1
+    dA.whileTrue(new SequentialCommandGroup( 
+                new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.score.SlapdownOut)),
+                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.score.ElevatorL2)),
+                new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.score.ElevatorL2), //needs testing 
+                new InstantCommand(() -> coralManipulatorSubsystem.intake())));
+                new WaitCommand(1);
+                new InstantCommand(() -> coralManipulatorSubsystem.stopMotors());
+                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.score.ElevatorHome));
+
+    dX.whileTrue(new SequentialCommandGroup( 
+                new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.score.SlapdownOut)),
+                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.score.ElevatorL1)),
+                new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.score.ElevatorL1), //needs testing 
+                new InstantCommand(() -> coralManipulatorSubsystem.intake())));
+                new WaitCommand(1);
+                new InstantCommand(() -> coralManipulatorSubsystem.stopMotors());
+                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.score.ElevatorHome));
+
     // Default command, normal field-relative drive
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
