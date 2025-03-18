@@ -33,10 +33,12 @@ public class IntakeCoral extends Command {
   @Override
   public boolean isFinished() {
     if (hasCoral == true) {
-      return coralManipulator.reachedPosition();
+      return coralManipulator.reachedPosition(5.0);
       // return true;
     }
-    return false;
+    else {
+      return false;
+    }
   }
 
   @Override
