@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
@@ -192,41 +193,45 @@ public class RobotContainer {
     //             () ->
     //                 elevatorSubsystem.moveElevator(
     //                     0.1))); 
-    dY.whileTrue(new SequentialCommandGroup( 
-                new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.score.SlapdownOut)),
-                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.score.ElevatorL4)),
-                new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.score.ElevatorL4), //needs testing 
-                new InstantCommand(() -> coralManipulatorSubsystem.intake())));
-                new WaitCommand(1);
-                new InstantCommand(() -> coralManipulatorSubsystem.stopMotors());
-                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.score.ElevatorHome));
+    dY.onTrue(new SequentialCommandGroup(
+                new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownOut)),
+                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorL4)),
+                new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.ScorePositions.ElevatorL4), // Needs testing
+                new ParallelCommandGroup(
+                new InstantCommand(() -> coralManipulatorSubsystem.intake()),
+                new WaitCommand(0.5)),
+                new InstantCommand(() -> coralManipulatorSubsystem.stopMotors()), 
+                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorHome))));
     
-    dB.whileTrue(new SequentialCommandGroup( 
-                new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.score.SlapdownOut)),
-                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.score.ElevatorL3)),
-                new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.score.ElevatorL3), //needs testing 
-                new InstantCommand(() -> coralManipulatorSubsystem.intake())));
-                new WaitCommand(1);
-                new InstantCommand(() -> coralManipulatorSubsystem.stopMotors());
-                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.score.ElevatorHome));
+    dB.onTrue(new SequentialCommandGroup(
+                new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownOut)),
+                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorL3)),
+                new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.ScorePositions.ElevatorL3), // Needs testing
+                new ParallelCommandGroup(
+                new InstantCommand(() -> coralManipulatorSubsystem.intake()),
+                new WaitCommand(0.5)),
+                new InstantCommand(() -> coralManipulatorSubsystem.stopMotors()), 
+                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorHome))));
 
-    dA.whileTrue(new SequentialCommandGroup( 
-                new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.score.SlapdownOut)),
-                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.score.ElevatorL2)),
-                new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.score.ElevatorL2), //needs testing 
-                new InstantCommand(() -> coralManipulatorSubsystem.intake())));
-                new WaitCommand(1);
-                new InstantCommand(() -> coralManipulatorSubsystem.stopMotors());
-                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.score.ElevatorHome));
+     dA.onTrue(new SequentialCommandGroup(
+                new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownOut)),
+                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorL2)),
+                new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.ScorePositions.ElevatorL2), // Needs testing
+                new ParallelCommandGroup(
+                new InstantCommand(() -> coralManipulatorSubsystem.intake()),
+                new WaitCommand(0.5)),
+                new InstantCommand(() -> coralManipulatorSubsystem.stopMotors()), 
+                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorHome))));
+     dX.onTrue(new SequentialCommandGroup(
+                new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownOut)),
+                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorL3)),
+                new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.ScorePositions.ElevatorL3), // Needs testing
+                new ParallelCommandGroup(
+                new InstantCommand(() -> coralManipulatorSubsystem.intake()),
+                new WaitCommand(0.5)),
+                new InstantCommand(() -> coralManipulatorSubsystem.stopMotors()), 
+                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorHome))));
 
-    dX.whileTrue(new SequentialCommandGroup( 
-                new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.score.SlapdownOut)),
-                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.score.ElevatorL1)),
-                new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.score.ElevatorL1), //needs testing 
-                new InstantCommand(() -> coralManipulatorSubsystem.intake())));
-                new WaitCommand(1);
-                new InstantCommand(() -> coralManipulatorSubsystem.stopMotors());
-                new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.score.ElevatorHome));
 
     // Default command, normal field-relative drive
     drive.setDefaultCommand(

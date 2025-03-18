@@ -54,7 +54,7 @@ public final class Constants {
     public static final int INTAKE_ID = 61;
     public static final int INTAKE_SENSOR_ID = 62;
   }
-  public class score {
+  public class ScorePositions {
     public static final int ElevatorL4 = 31;
     public static final int ElevatorL3 = 17;
     public static final int ElevatorL2 = 9;
