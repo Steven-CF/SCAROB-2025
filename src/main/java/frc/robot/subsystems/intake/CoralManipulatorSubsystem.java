@@ -39,10 +39,7 @@ public class CoralManipulatorSubsystem extends SubsystemBase {
     coralManipulator2.getEncoder().setPosition(0);
   }
 
-  public boolean reachedPosition() {
-    if (coralManipulator2.getEncoder().getPosition() >= 5) {
-      return true;
-    }
-    return false;
+  public boolean reachedPosition(double positionInput) {
+    return coralManipulator2.getEncoder().getPosition() >= positionInput;
   }
 }
