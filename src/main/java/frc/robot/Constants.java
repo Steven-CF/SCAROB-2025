@@ -54,12 +54,21 @@ public final class Constants {
     public static final int INTAKE_ID = 61;
     public static final int INTAKE_SENSOR_ID = 62;
   }
+
   public class ScorePositions {
     public static final int ElevatorL4 = 31;
     public static final int ElevatorL3 = 17;
     public static final int ElevatorL2 = 9;
     public static final int ElevatorL1 = 4;
-    public static final double ElevatorHome = 0.1;
+    public static final double ElevatorHome = 0;
+    public static final double ElevatorBarge = 36;
+    public static final double ElevatorProcessor = 0;
+    public static final int ElevatorL3Intake = 17; 
+    public static final int ElevatorL2Intake = 9;
     public static final double SlapdownOut = -0.6;
+    public static final double SlapdownIntake = -2; 
+    public static final double SlapdownGroundIntake = -3.6; 
+    public static final double SlapdownOuttakeBarge = -2.5;
+    public static final double SlapdownOuttakeProcessor = -1.6; 
   }
 }

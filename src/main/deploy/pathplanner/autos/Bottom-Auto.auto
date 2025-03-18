@@ -13,7 +13,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Coral-outtake"
+            "name": "Score-Coral"
           }
         },
         {
@@ -23,22 +23,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Coral-Intake"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.5
-                }
-              }
-            ]
+            "name": "Coral-Intake"
           }
         },
         {
@@ -50,7 +37,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Coral-outtake"
+            "name": "Score-Coral"
           }
         },
         {
@@ -60,22 +47,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Coral-Intake"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.5
-                }
-              }
-            ]
+            "name": "Coral-Intake"
           }
         },
         {
@@ -87,7 +61,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Coral-outtake"
+            "name": "Score-Coral"
           }
         }
       ]
