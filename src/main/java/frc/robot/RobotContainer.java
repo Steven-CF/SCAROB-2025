@@ -103,6 +103,15 @@ public class RobotContainer {
   private final Trigger opPOVUp = xboxOperatorController.povUp();
   private final Trigger opPOVLeft = xboxOperatorController.povLeft();
   private final Trigger opPOVRight = xboxOperatorController.povRight();
+
+  private double desiredCoralPosition = Constants.ScorePositions.ElevatorL2;
+  private double desiredAlgaePosition = Constants.ScorePositions.SlapdownOut;
+  // TODO: (Evens) there might be an error if the desired_possition changes before the elevator got there
+    // Fix would be to have 2 more variables for the desired_possition and a last_set_possition which would be 
+    // set to the last_set_possition = desired_possition at the start of the sequential command group and use
+    // last_set_possition instead of desired_possition in the wait until command
+
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     switch (Constants.currentMode) {
@@ -209,84 +218,21 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+
   private void configureButtonBindings() {
-    // Elevator
-    // dY.whileTrue(new InstantCommand(() -> elevatorSubsystem.moveElevator(31)))
-    //     .onFalse(
-    //         new InstantCommand(
-    //             () ->
-    //                 elevatorSubsystem.moveElevator(
-    //                     0.1)));
-//Auto Score L4 Coral
-dY.onTrue(
-    new SequentialCommandGroup(
-        new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownOut)),
-        new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorL4)),
-        new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.ScorePositions.ElevatorL4),
-        new InstantCommand(() -> coralManipulatorSubsystem.intake()),
-        new ScheduleCommand(new WaitCommand(0.5).andThen(() -> coralManipulatorSubsystem.stopMotors())),
-        new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorHome))));
 
-//Auto Score L3 Coral
-dB.onTrue(
-    new SequentialCommandGroup(
-        new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownOut)),
-        new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorL3)),
-        new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.ScorePositions.ElevatorL3),
-        new InstantCommand(() -> coralManipulatorSubsystem.intake()),
-        new ScheduleCommand(new WaitCommand(0.5).andThen(() -> coralManipulatorSubsystem.stopMotors())),
-        new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorHome))));
-
-//Auto Score L2 Coral
-dA.onTrue(
-    new SequentialCommandGroup(
-        new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownOut)),
-        new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorL2)),
-        new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.ScorePositions.ElevatorL2),
-        new InstantCommand(() -> coralManipulatorSubsystem.intake()),
-        new ScheduleCommand(new WaitCommand(0.5).andThen(() -> coralManipulatorSubsystem.stopMotors())),
-        new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorHome))));
-
-//Auto Score L1 Coral
-dX.onTrue(
-    new SequentialCommandGroup(
-        new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownOut)),
-        new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorL1)),
-        new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.ScorePositions.ElevatorL1),
-        new InstantCommand(() -> coralManipulatorSubsystem.intake()),
-        new ScheduleCommand(new WaitCommand(0.5).andThen(() -> coralManipulatorSubsystem.stopMotors())),
-        new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorHome))));
-
-//Auto Pickup a Algae from L3 
-dRightBumper.onTrue(
-    new SequentialCommandGroup(
-        new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownOut)),
-        new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorL3Intake)),
-        new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.ScorePositions.ElevatorL3Intake),
-        new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownIntake)),
-        new InstantCommand(() -> slapdownSubsystem.intakeRollers()),
-        new ScheduleCommand(new WaitCommand(0.5).andThen(() -> slapdownSubsystem.stopRollers())),
-        new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorHome))));
-
-//Auto Pickup a Algae from L2 
-dRightBumper.onTrue(
-    new SequentialCommandGroup(
-            new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownOut)),
-            new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorL2Intake)),
-            new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == Constants.ScorePositions.ElevatorL2Intake),
-            new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownIntake)),
-            new InstantCommand(() -> slapdownSubsystem.intakeRollers()),
-            new ScheduleCommand(new WaitCommand(0.5).andThen(() -> slapdownSubsystem.stopRollers())),
-            new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorHome))));
-//Pickup from Ground 
-dPOVDown.onTrue(
-    new SequentialCommandGroup(
-            new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownGroundIntake)),
-            new InstantCommand(() -> slapdownSubsystem.intakeRollers()),
-            new ScheduleCommand(new WaitCommand(0.5).andThen(() -> slapdownSubsystem.stopRollers()))));
+    // score coral
+dLeftTrigger.onTrue(    //TODO: (Evens) fix the confliting button bindings
+    new SequentialCommandGroup(  
+        new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownOut)),              // move slapdown to safe pos
+        new InstantCommand(() -> elevatorSubsystem.moveElevator(desiredCoralPosition)),                             // move elevator to desired pos
+        new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == desiredCoralPosition),                // wait till elevator is at desired pos
+        new InstantCommand(() -> coralManipulatorSubsystem.intake()),                                               // start the intake
+        new ScheduleCommand(new WaitCommand(0.5).andThen(() -> coralManipulatorSubsystem.stopMotors())),            // stop the intake after 0.5 seconds
+        new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorHome))));          // bring elevator home
 
 //Auto Score Algae to Barge 
-dLeftTrigger.onTrue(
+dLeftTrigger.onTrue(    //TODO: (Evens) fix the confliting button bindings
     new SequentialCommandGroup(
         new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownOut)),
         new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorBarge)),
@@ -308,6 +254,56 @@ dRightTrigger.onTrue(
             new ScheduleCommand(new WaitCommand(0.5).andThen(() -> slapdownSubsystem.stopRollers())),
             new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownOut)),
             new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorHome))));
+
+    // pick up alage
+dRightBumper.onTrue(
+    new SequentialCommandGroup(
+        new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownOut)),      // move slapdown to safe pos
+        new InstantCommand(() -> elevatorSubsystem.moveElevator(desiredAlgaePosition)),                     // move elevator to desired pos
+        new WaitUntilCommand(() -> elevatorSubsystem.getElevatorPosition() == desiredAlgaePosition),        // wait till elevator is at desired pos
+        new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownIntake)),   // set the intake at the right angle
+        new InstantCommand(() -> slapdownSubsystem.intakeRollers()),                                        // start the intake
+        new ScheduleCommand(new WaitCommand(0.5).andThen(() -> slapdownSubsystem.stopRollers())),           // stop the intake after 0.5 seconds
+        new InstantCommand(() -> elevatorSubsystem.moveElevator(Constants.ScorePositions.ElevatorHome))));  // bring elevator home
+
+    // Pickup alage from Ground 
+// dPOVDown.onTrue(
+//     new SequentialCommandGroup(
+//             new InstantCommand(() -> slapdownSubsystem.angleIntake(Constants.ScorePositions.SlapdownGroundIntake)),
+//             new InstantCommand(() -> slapdownSubsystem.intakeRollers()),
+//             new ScheduleCommand(new WaitCommand(0.5).andThen(() -> slapdownSubsystem.stopRollers()))));
+
+    // intake coral
+dLeftBumper.whileTrue(new InstantCommand(() -> slapdownSubsystem.intakeRollers()))
+    .onFalse(new InstantCommand(() -> slapdownSubsystem.stopRollers()));
+
+    //set elevator position to L4 
+opY.onTrue(new InstantCommand(() -> desiredCoralPosition = Constants.ScorePositions.ElevatorL4))  
+    .onFalse(new InstantCommand(() -> desiredCoralPosition = Constants.ScorePositions.ElevatorL2));  // on false set defualt to L2
+
+    //set elevator position and algae intake to L3
+opB.onTrue(new SequentialCommandGroup(
+    new InstantCommand(() -> desiredCoralPosition = Constants.ScorePositions.ElevatorL3),
+    new InstantCommand(() -> desiredAlgaePosition = Constants.ScorePositions.ElevatorL3Intake)))  
+    .onFalse(new SequentialCommandGroup(
+        new InstantCommand(() -> desiredCoralPosition = Constants.ScorePositions.ElevatorL2),  // on false set defualt coral level to L2 and slapdown to home
+        new InstantCommand(() -> desiredAlgaePosition = Constants.ScorePositions.SlapdownOut)));  
+
+    // set elevator position and algae intake to L2 
+opA.onTrue(new SequentialCommandGroup(
+        //new InstantCommand(() -> desiredCoralPosition = Constants.ScorePositions.ElevatorL2),
+    new InstantCommand(() -> desiredAlgaePosition = Constants.ScorePositions.ElevatorL2Intake)))  
+    .onFalse(new SequentialCommandGroup(
+            //new InstantCommand(() -> desiredCoralPosition = Constants.ScorePositions.ElevatorL2),  // on false set defualt coral level to L2 and slapdown to home
+        new InstantCommand(() -> desiredAlgaePosition = Constants.ScorePositions.SlapdownOut)));  
+
+    //set elevator position to L1 and slapdown to L1/ground
+opX.onTrue(new SequentialCommandGroup(
+    new InstantCommand(() -> desiredCoralPosition = Constants.ScorePositions.ElevatorL1),
+    new InstantCommand(() -> desiredAlgaePosition = Constants.ScorePositions.SlapdownGroundIntake)))  
+.onFalse(new SequentialCommandGroup(
+    new InstantCommand(() -> desiredCoralPosition = Constants.ScorePositions.ElevatorL2),   // on false set defualt coral level to L2 and slapdown to home
+    new InstantCommand(() -> desiredAlgaePosition = Constants.ScorePositions.SlapdownOut)));  
 
     // Default command, normal field-relative drive
     drive.setDefaultCommand(
